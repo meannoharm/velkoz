@@ -1,0 +1,9 @@
+{
+  "name": "velkez",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "gao",
+  "dependencies": {
+    "typescript": "^4.4.3"
+  }
+}
