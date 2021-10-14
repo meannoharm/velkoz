@@ -16,6 +16,7 @@ export class Logger {
       })
     }
   }
+
   disable(): void {
     this.enabled = false
   }

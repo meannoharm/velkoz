@@ -5,5 +5,8 @@
   "author": "gao",
   "dependencies": {
     "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.5"
   }
 }

@@ -1,6 +1,6 @@
 import { ToStringTypes } from '@/constants'
 import { generateUUID, validateOptionsAndSet } from '@/utils'
-import type { BaseOptionsFieldsIntegrationType, BaseOptionsType, VueInstance } from '@/types'
+import type { BaseOptionsFieldsIntegrationType, BaseOptionsType } from '@/types'
 
 /**
  * 公用的基础配置项绑定
@@ -17,7 +17,6 @@ export class BaseOptions<O extends BaseOptionsFieldsIntegrationType = BaseOption
   traceIdFieldName = 'Trace-Id'
   throttleDelayTime = 0
   beforeAppAjaxSend = null
-  vue: VueInstance = null
   constructor() {}
   bindOptions(options: O) {
     const { enableTraceId, vue, filterXhrUrlRegExp, traceIdFieldName, throttleDelayTime, includeHttpUrlTraceIdRegExp, beforeAppAjaxSend } =
