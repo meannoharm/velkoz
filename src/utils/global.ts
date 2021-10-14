@@ -7,18 +7,18 @@ import type { DeviceInfo } from "@/types";
  *velkez的全局变量
  *
  * @export
- * @interface VelKezSupport
+ * @interface VelKozSupport
  */
-export interface VelKezSupport {
+export interface VelKozSupport {
   logger: Logger;
   replaceFlag: { [key in EventTypes]?: boolean };
   record?: any[];
   deviceInfo?: DeviceInfo;
 }
 
-interface VelKezGlobal {
+interface VelKozGlobal {
   console?: Console;
-  __VelKez__?: VelKezSupport;
+  __VelKoz__?: VelKozSupport;
 }
 
 export const isNodeEnv = variableTypeDetection.isProcess(
@@ -35,22 +35,22 @@ export const isBrowserEnv = variableTypeDetection.isWindow(
  * ../returns Global scope object
  */
 export function getGlobal() {
-  if (isBrowserEnv) return window as VelKezGlobal & Window;
-  if (isNodeEnv) return process as VelKezGlobal & NodeJS.Process;
-  return window as VelKezGlobal & Window;
+  if (isBrowserEnv) return window as VelKozGlobal & Window;
+  if (isNodeEnv) return process as VelKozGlobal & NodeJS.Process;
+  return window as VelKozGlobal & Window;
 }
 
 const _global = getGlobal();
-const _support = getGlobalVelKezSupport();
+const _support = getGlobalVelKozSupport();
 
 /**
- * 获取全局变量___VelKez__的引用地址
+ * 获取全局变量___VelKoz__的引用地址
  *
- * @return {*}  {VelKezSupport}
+ * @return {*}  {VelKozSupport}
  */
-function getGlobalVelKezSupport(): VelKezSupport {
-  _global.__VelKez__ = _global.__VelKez__ || ({} as VelKezSupport);
-  return _global.__VelKez__;
+function getGlobalVelKozSupport(): VelKozSupport {
+  _global.__VelKoz__ = _global.__VelKoz__ || ({} as VelKozSupport);
+  return _global.__VelKoz__;
 }
 
 export { _global, _support };
