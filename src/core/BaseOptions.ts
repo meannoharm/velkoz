@@ -19,7 +19,7 @@ export class BaseOptions<O extends BaseOptionsFieldsIntegrationType = BaseOption
   beforeAppAjaxSend = null
   constructor() {}
   bindOptions(options: O) {
-    const { enableTraceId, vue, filterXhrUrlRegExp, traceIdFieldName, throttleDelayTime, includeHttpUrlTraceIdRegExp, beforeAppAjaxSend } =
+    const { enableTraceId, filterXhrUrlRegExp, traceIdFieldName, throttleDelayTime, includeHttpUrlTraceIdRegExp, beforeAppAjaxSend } =
       options
     const optionArr = [
       [enableTraceId, 'enableTraceId', ToStringTypes.Boolean],
@@ -30,8 +30,6 @@ export class BaseOptions<O extends BaseOptionsFieldsIntegrationType = BaseOption
       [beforeAppAjaxSend, 'beforeAppAjaxSend', ToStringTypes.Function]
     ]
     validateOptionsAndSet.call(this, optionArr)
-    // for vue
-    this.vue = vue
   }
   isFilterHttpUrl(url: string): boolean {
     return this.filterXhrUrlRegExp && this.filterXhrUrlRegExp.test(url)
