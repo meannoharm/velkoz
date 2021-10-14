@@ -1,6 +1,8 @@
-import type { BaseOptionsFieldsIntegrationType } from './baseOptions'
+import type { BaseOptionsFieldsIntegrationType } from "./baseOptions";
 
-export interface BaseClientType<O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType> {
+export interface BaseClientType<
+  O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType
+> {
   /**
    *SDK名称
    *
@@ -8,14 +10,14 @@ export interface BaseClientType<O extends BaseOptionsFieldsIntegrationType = Bas
    * @memberof BaseClientType
    * @static
    */
-  SDK_NAME?: string
+  SDK_NAME?: string;
   /**
    *SDK版本
    *
    * @type {string}
    * @memberof BaseClientType
    */
-  SDK_VERSION: string
+  SDK_VERSION: string;
 
   /**
    *配置项和钩子函数
@@ -23,7 +25,7 @@ export interface BaseClientType<O extends BaseOptionsFieldsIntegrationType = Bas
    * @type {O}
    * @memberof BaseClientType
    */
-  options: O
+  options: O;
 
   /**
    *返回配置项和钩子函数
@@ -31,5 +33,5 @@ export interface BaseClientType<O extends BaseOptionsFieldsIntegrationType = Bas
    * @return {*}  {O}
    * @memberof BaseClientType
    */
-  getOptions(): O
+  getOptions(): O;
 }

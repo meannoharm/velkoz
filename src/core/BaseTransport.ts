@@ -1,6 +1,19 @@
-import { logger, Queue, isInclude, createErrorId, isEmpty, validateOptionsAndSet } from '@/utils'
-import { SDK_NAME, SDK_VERSION, ToStringTypes } from '@/constants'
-import type { AuthInfo, BaseOptionsFieldsIntegrationType, BreadcrumbPushData, ReportDataType, TransportDataType } from '@/types'
+import {
+  logger,
+  Queue,
+  isInclude,
+  createErrorId,
+  isEmpty,
+  validateOptionsAndSet,
+} from "@/utils";
+import { SDK_NAME, SDK_VERSION, ToStringTypes } from "@/constants";
+import type {
+  AuthInfo,
+  BaseOptionsFieldsIntegrationType,
+  BreadcrumbPushData,
+  ReportDataType,
+  TransportDataType,
+} from "@/types";
 
 /**
  * 传输数据抽象类
@@ -10,16 +23,31 @@ import type { AuthInfo, BaseOptionsFieldsIntegrationType, BreadcrumbPushData, Re
  * @class BaseTransport
  * @template O
  */
-export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType> {
-  apikey = ''
-  dsn = ''
-  queue: Queue
-  beforeDataReport: Promise<TransportDataType | null | undefined | boolean> | TransportDataType | any | null | undefined | boolean = null
-  backTrackerId: unknown = null
-  configReportUrl: unknown = null
-  maxDuplicateCount = 3
+export default abstract class BaseTransport<
+  O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType
+> {
+  apikey = "";
+
+  dsn = "";
+
+  queue: Queue;
+
+  beforeDataReport:
+    | Promise<TransportDataType | null | undefined | boolean>
+    | TransportDataType
+    | any
+    | null
+    | undefined
+    | boolean = null;
+
+  backTrackerId: unknown = null;
+
+  configReportUrl: unknown = null;
+
+  maxDuplicateCount = 3;
+
   constructor() {
-    this.queue = new Queue()
+    this.queue = new Queue();
   }
 
   /**
@@ -29,14 +57,14 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @memberof BaseTransport
    */
   getAuthInfo(): AuthInfo {
-    const trackerId = this.getTrackerId()
+    const trackerId = this.getTrackerId();
     const result: AuthInfo = {
       trackerId: String(trackerId),
       sdkVersion: SDK_VERSION,
       sdkName: SDK_NAME,
-      apikey: this.apikey
-    }
-    return result
+      apikey: this.apikey,
+    };
+    return result;
   }
 
   /**
@@ -46,15 +74,16 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @memberof BaseTransport
    */
   getTrackerId(): string | number {
-    if (typeof this.backTrackerId === 'function') {
-      const trackerId = this.backTrackerId()
-      if (typeof trackerId === 'string' || typeof trackerId === 'number') {
-        return trackerId
-      } else {
-        logger.error(`trackerId:${trackerId} 期望 string 或 number 类型，但是传入 ${typeof trackerId}`)
+    if (typeof this.backTrackerId === "function") {
+      const trackerId = this.backTrackerId();
+      if (typeof trackerId === "string" || typeof trackerId === "number") {
+        return trackerId;
       }
+      logger.error(
+        `trackerId:${trackerId} 期望 string 或 number 类型，但是传入 ${typeof trackerId}`
+      );
     }
-    return ''
+    return "";
   }
 
   /**
@@ -65,7 +94,7 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @memberof BaseTransport
    */
   isSelfDsn(targetUrl: string): boolean {
-    return this.dsn && isInclude(targetUrl, this.dsn)
+    return this.dsn && isInclude(targetUrl, this.dsn);
   }
 
   /**
@@ -75,17 +104,24 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @memberof BaseTransport
    */
   bindOptions(options: Partial<O> = {}): void {
-    const { dsn, beforeDataReport, apikey, maxDuplicateCount, backTrackerId, configReportUrl } = options
-    const functionType = ToStringTypes.Function
+    const {
+      dsn,
+      beforeDataReport,
+      apikey,
+      maxDuplicateCount,
+      backTrackerId,
+      configReportUrl,
+    } = options;
+    const functionType = ToStringTypes.Function;
     const optionArr = [
-      [apikey, 'apikey', ToStringTypes.String],
-      [dsn, 'dsn', ToStringTypes.String],
-      [maxDuplicateCount, 'maxDuplicateCount', ToStringTypes.Number],
-      [beforeDataReport, 'beforeDataReport', functionType],
-      [backTrackerId, 'backTrackerId', functionType],
-      [configReportUrl, 'configReportUrl', functionType]
-    ]
-    validateOptionsAndSet.call(this, optionArr)
+      [apikey, "apikey", ToStringTypes.String],
+      [dsn, "dsn", ToStringTypes.String],
+      [maxDuplicateCount, "maxDuplicateCount", ToStringTypes.Number],
+      [beforeDataReport, "beforeDataReport", functionType],
+      [backTrackerId, "backTrackerId", functionType],
+      [configReportUrl, "configReportUrl", functionType],
+    ];
+    validateOptionsAndSet.call(this, optionArr);
   }
 
   /**
@@ -99,28 +135,28 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
   async send(data: any, breadcrumb: BreadcrumbPushData[] = []): Promise<void> {
     // 如果是埋点则不需要生成errorId
     if (!data.isTrack) {
-      const errorId = createErrorId(data, this.apikey, this.maxDuplicateCount)
-      if (!errorId) return
-      data.errorId = errorId
+      const errorId = createErrorId(data, this.apikey, this.maxDuplicateCount);
+      if (!errorId) return;
+      data.errorId = errorId;
     }
     let transportData = {
       ...this.getTransportData(data),
-      breadcrumb
+      breadcrumb,
+    };
+    if (typeof this.beforeDataReport === "function") {
+      transportData = await this.beforeDataReport(transportData);
+      if (!transportData) return;
     }
-    if (typeof this.beforeDataReport === 'function') {
-      transportData = await this.beforeDataReport(transportData)
-      if (!transportData) return
-    }
-    let dsn = this.dsn
+    let { dsn } = this;
     if (isEmpty(dsn)) {
-      logger.error('dsn is empty,pass in when initializing please')
-      return
+      logger.error("dsn is empty,pass in when initializing please");
+      return;
     }
-    if (typeof this.configReportUrl === 'function') {
-      dsn = this.configReportUrl(transportData, dsn)
-      if (!dsn) return
+    if (typeof this.configReportUrl === "function") {
+      dsn = this.configReportUrl(transportData, dsn);
+      if (!dsn) return;
     }
-    return this.sendToServer(transportData, dsn)
+    return this.sendToServer(transportData, dsn);
   }
 
   /**
@@ -131,7 +167,8 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @param {string} url
    * @memberof BaseTransport
    */
-  abstract post(data: TransportDataType | any, url: string): void
+  abstract post(data: TransportDataType | any, url: string): void;
+
   /**
    * 最终上报到服务器的方法，需要子类重写
    *
@@ -140,7 +177,8 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @param {string} url
    * @memberof BaseTransport
    */
-  abstract sendToServer(data: TransportDataType | any, url: string): void
+  abstract sendToServer(data: TransportDataType | any, url: string): void;
+
   /**
    * 获取上报的格式
    *
@@ -149,5 +187,5 @@ export abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType =
    * @return {TransportDataType}  {TransportDataType}
    * @memberof BaseTransport
    */
-  abstract getTransportData(data: ReportDataType): TransportDataType
+  abstract getTransportData(data: ReportDataType): TransportDataType;
 }

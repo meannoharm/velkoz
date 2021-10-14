@@ -1,9 +1,14 @@
-import { EventTypes, SDK_VERSION } from '@/constants'
-import { logger } from '@/utils'
-import { BaseTransport } from './BaseTransport'
-import {Breadcrumb} from './Breadcrumb'
-import { Subscribe } from './Subscribe'
-import type { BaseClientType, BaseOptionsFieldsIntegrationType, BasePluginType, LogTypes } from '@/types'
+import { EventTypes, SDK_NAME, SDK_VERSION } from "@/constants";
+import { logger } from "@/utils";
+import BaseTransport from "./BaseTransport";
+import { Breadcrumb } from "./Breadcrumb";
+import { Subscribe } from "./Subscribe";
+import type {
+  BaseClientType,
+  BaseOptionsFieldsIntegrationType,
+  BasePluginType,
+  LogTypes,
+} from "@/types";
 
 /**
  * 抽象客户端，已实现插件和钩子函数的定义
@@ -16,19 +21,24 @@ import type { BaseClientType, BaseOptionsFieldsIntegrationType, BasePluginType, 
  * @template O
  * @template E
  */
-export abstract class BaseClient<
+export default abstract class BaseClient<
   O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType,
   E extends EventTypes = EventTypes
 > implements BaseClientType
 {
-  SDK_NAME: string
-  SDK_VERSION = SDK_VERSION
-  options: BaseOptionsFieldsIntegrationType
-  abstract breadcrumb: Breadcrumb
-  abstract transport: BaseTransport
+  SDK_NAME = SDK_NAME;
+
+  SDK_VERSION = SDK_VERSION;
+
+  options: BaseOptionsFieldsIntegrationType;
+
+  abstract breadcrumb: Breadcrumb;
+
+  abstract transport: BaseTransport;
+
   constructor(options: O) {
-    this.options = options
-    logger.bindOptions(options.debug)
+    this.options = options;
+    logger.bindOptions(options.debug);
   }
 
   /**
@@ -38,20 +48,21 @@ export abstract class BaseClient<
    * @memberof BaseClient
    */
   use(plugins: BasePluginType<E>[]) {
-    if (this.options.disabled) return
-    const subscribe = new Subscribe<E>()
+    if (this.options.disabled) return;
+    const subscribe = new Subscribe<E>();
     plugins.forEach((item) => {
-      if (!this.isPluginEnable(item.name)) return
-      item.monitor.call(this, subscribe.notify.bind(subscribe))
-      const wrapperTranform = (...args: any[]) => {
-        const res = item.transform?.apply(this, args)
-        item.consumer?.call(this, res)
-      }
-      subscribe.watch(item.name, wrapperTranform)
-    })
+      if (!this.isPluginEnable(item.name)) return;
+      item.monitor.call(this, subscribe.notify.bind(subscribe));
+      const wrapperTransform = (...args: any[]) => {
+        const res = item.transform?.apply(this, args);
+        item.consumer?.call(this, res);
+      };
+      subscribe.watch(item.name, wrapperTransform);
+    });
   }
+
   getOptions() {
-    return this.options
+    return this.options;
   }
 
   /**
@@ -62,7 +73,7 @@ export abstract class BaseClient<
    * @return {*}  {boolean}
    * @memberof BaseClient
    */
-  abstract isPluginEnable(name: EventTypes): boolean
+  abstract isPluginEnable(name: EventTypes): boolean;
 
   /**
    * 手动上报方法，每个端需要自己实现
@@ -71,5 +82,5 @@ export abstract class BaseClient<
    * @param {LogTypes} data
    * @memberof BaseClient
    */
-  abstract log(data: LogTypes): void
+  abstract log(data: LogTypes): void;
 }
