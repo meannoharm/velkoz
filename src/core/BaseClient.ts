@@ -1,8 +1,8 @@
 import { EventTypes, SDK_NAME, SDK_VERSION } from "@/constants";
 import { logger } from "@/utils";
 import BaseTransport from "./BaseTransport";
-import { Breadcrumb } from "./Breadcrumb";
-import { Subscribe } from "./Subscribe";
+import Breadcrumb from "./Breadcrumb";
+import Subscribe from "./Subscribe";
 import type {
   BaseClientType,
   BaseOptionsFieldsIntegrationType,

@@ -1,71 +1,79 @@
-import { BreadcrumbPushData, TransportDataType } from '@/types'
-import { Breadcrumb } from '@/core'
-type CANCEL = null | undefined | boolean
+import { BreadcrumbPushData, TransportDataType } from "@/types";
+import { Breadcrumb } from "@/core";
+type CANCEL = null | undefined | boolean;
 
-type TSetRequestHeader = (key: string, value: string) => {}
+type TSetRequestHeader = (key: string, value: string) => {};
 export interface IBeforeAppAjaxSendConfig {
-  setRequestHeader: TSetRequestHeader
+  setRequestHeader: TSetRequestHeader;
 }
 
-export type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE' | 'OPTIONS'
+export type HttpMethod =
+  | "GET"
+  | "POST"
+  | "PATCH"
+  | "PUT"
+  | "DELETE"
+  | "OPTIONS";
 
 interface IRequestHeaderConfig {
-  url: HttpMethod
-  method: string
+  url: HttpMethod;
+  method: string;
 }
-export interface BaseOptionsType<O extends BaseOptionsFieldsIntegrationType> extends BaseOptionsFieldsIntegrationType {
-  bindOptions(options: O): void
+export interface BaseOptionsType<O extends BaseOptionsFieldsIntegrationType>
+  extends BaseOptionsFieldsIntegrationType {
+  bindOptions(options: O): void;
 }
 
-export type BaseOptionsFieldsIntegrationType = BaseOptionsFieldsType & BaseOptionsHooksType
+export type BaseOptionsFieldsIntegrationType = BaseOptionsFieldsType &
+  BaseOptionsHooksType;
 
 export interface BaseOptionsFieldsType {
   /**
    * report to server's url
    */
-  dsn?: string
+  dsn?: string;
   /**
    * default is closed,sdk all functions will be turned off when set ture
    */
-  disabled?: boolean
+  disabled?: boolean;
   /**
    * default is ''(empty string),it mean that every project has a unique key
    */
-  apikey?: string
+  apikey?: string;
   /**
    * default is closed,it will be print in Console when set true
    */
-  debug?: boolean
+  debug?: boolean;
   /**
    * default is closed,all page's http request will add a unique id in request header
    */
-  enableTraceId?: boolean
+  enableTraceId?: boolean;
   /**
    * Should config this field if you set `enableTraceId` true.Considering that random addition of redundant request headers maybe cause cross-domain error,so here is regular containing relationship
    */
-  traceIdFieldName?: string
+  traceIdFieldName?: string;
   /**
    * When set `enableTraceId` true,traceId will be added in request header, defaul value is `Trace-Id`.
    * You can configure this field to appoint name
    */
-  includeHttpUrlTraceIdRegExp?: RegExp
+  includeHttpUrlTraceIdRegExp?: RegExp;
   /**
    * default value is null,mean all ajax http will be monitored.You can set some value to filter url.
    * It will filter when `filterXhrUrlRegExp.test(xhr.url) === true`
    */
-  filterXhrUrlRegExp?: RegExp
+  filterXhrUrlRegExp?: RegExp;
   /**
    * defaul value is 20,it will be 100 if value more than 100.it mean breadcrumb stack length
    */
-  maxBreadcrumbs?: number
+  maxBreadcrumbs?: number;
   /**
    * defaul value is 0,it mean throttle delay time of button click event and weixin touch event
    */
-  throttleDelayTime?: number
+  throttleDelayTime?: number;
   /**
    * default value is 2,it mean max report count of the same error
    */
-  maxDuplicateCount?: number
+  maxDuplicateCount?: number;
 }
 
 export interface BaseOptionsHooksType {
@@ -76,7 +84,14 @@ export interface BaseOptionsHooksType {
    * @return {*}  {(Promise<TransportDataType | null | CANCEL> | TransportDataType | any | CANCEL | null)} 如果返回 null | undefined | boolean 时，将忽略本次上传
    * @memberof BaseOptionsHooksType
    */
-  beforeDataReport?(event: TransportDataType): Promise<TransportDataType | null | CANCEL> | TransportDataType | any | CANCEL | null
+  beforeDataReport?(
+    event: TransportDataType
+  ):
+    | Promise<TransportDataType | null | CANCEL>
+    | TransportDataType
+    | any
+    | CANCEL
+    | null;
   /**
    *
    * 钩子函数，每次发送前都会调用
@@ -85,7 +100,7 @@ export interface BaseOptionsHooksType {
    * @return {*}  {string} 返回空时不上报
    * @memberof BaseOptionsHooksType
    */
-  configReportUrl?(event: TransportDataType, url: string): string
+  configReportUrl?(event: TransportDataType, url: string): string;
   /**
    * 钩子函数:在每次添加用户行为事件前都会调用
    *
@@ -94,7 +109,10 @@ export interface BaseOptionsHooksType {
    * @return {*}  {(BreadcrumbPushData | CANCEL)} 如果返回 null | undefined | boolean 时，将忽略本次的push
    * @memberof BaseOptionsHooksType
    */
-  beforePushBreadcrumb?(breadcrumb: Breadcrumb, hint: BreadcrumbPushData): BreadcrumbPushData | CANCEL
+  beforePushBreadcrumb?(
+    breadcrumb: Breadcrumb,
+    hint: BreadcrumbPushData
+  ): BreadcrumbPushData | CANCEL;
   /**
    * 钩子函数:拦截用户页面的ajax请求，并在ajax请求发送前执行该hook，可以对用户发送的ajax请求做xhr.setRequestHeader
    *
@@ -102,7 +120,10 @@ export interface BaseOptionsHooksType {
    * @param {IBeforeAppAjaxSendConfig} setRequestHeader 设置请求头函数
    * @memberof BaseOptionsHooksType
    */
-  beforeAppAjaxSend?(config: IRequestHeaderConfig, setRequestHeader: IBeforeAppAjaxSendConfig): void
+  beforeAppAjaxSend?(
+    config: IRequestHeaderConfig,
+    setRequestHeader: IBeforeAppAjaxSendConfig
+  ): void;
   /**
    *钩子函数:在beforeDataReport后面调用，在整合上报数据和本身SDK信息数据前调用，当前函数执行完后立即将数据错误信息上报至服务端
    *trackerId表示用户唯一键（可以理解成userId），需要trackerId的意义可以区分每个错误影响的用户数量
@@ -110,5 +131,5 @@ export interface BaseOptionsHooksType {
    * @return {*}  {(string | number)}
    * @memberof BaseOptionsHooksType
    */
-  backTrackerId?(): string | number
+  backTrackerId?(): string | number;
 }

@@ -1,10 +1,10 @@
-import { ToStringTypes } from '@/constants'
+import { ToStringTypes } from "@/constants";
 
-export const nativeToString = Object.prototype.toString
+export const nativeToString = Object.prototype.toString;
 export function isType(type: string) {
   return function (value: any): boolean {
-    return nativeToString.call(value) === `[object ${type}]`
-  }
+    return nativeToString.call(value) === `[object ${type}]`;
+  };
 }
 
 /**
@@ -22,8 +22,8 @@ export const variableTypeDetection = {
   isObject: isType(ToStringTypes.Object),
   isArray: isType(ToStringTypes.Array),
   isProcess: isType(ToStringTypes.process),
-  isWindow: isType(ToStringTypes.Window)
-}
+  isWindow: isType(ToStringTypes.Window),
+};
 
 /**
  * Checks whether given value's type is one of a few Error or Error-like
@@ -34,14 +34,14 @@ export const variableTypeDetection = {
  */
 export function isError(wat: any): boolean {
   switch (nativeToString.call(wat)) {
-    case '[object Error]':
-      return true
-    case '[object Exception]':
-      return true
-    case '[object DOMException]':
-      return true
+    case "[object Error]":
+      return true;
+    case "[object Exception]":
+      return true;
+    case "[object DOMException]":
+      return true;
     default:
-      return isInstanceOf(wat, Error)
+      return isInstanceOf(wat, Error);
   }
 }
 
@@ -52,8 +52,8 @@ export function isError(wat: any): boolean {
  * @param {Object} obj 待检测的对象
  * @return {*}  {boolean}
  */
-export function isEmptyObject(obj: Object): boolean {
-  return variableTypeDetection.isObject(obj) && Object.keys(obj).length === 0
+export function isEmptyObject(obj: Record<string, unknown>): boolean {
+  return variableTypeDetection.isObject(obj) && Object.keys(obj).length === 0;
 }
 
 /**
@@ -64,7 +64,11 @@ export function isEmptyObject(obj: Object): boolean {
  * @return {*}  {boolean}
  */
 export function isEmpty(wat: any): boolean {
-  return (variableTypeDetection.isString(wat) && wat.trim() === '') || wat === undefined || wat === null
+  return (
+    (variableTypeDetection.isString(wat) && wat.trim() === "") ||
+    wat === undefined ||
+    wat === null
+  );
 }
 
 /**
@@ -78,12 +82,15 @@ export function isEmpty(wat: any): boolean {
 export function isInstanceOf(wat: any, base: any): boolean {
   try {
     // tslint:disable-next-line:no-unsafe-any
-    return wat instanceof base
+    return wat instanceof base;
   } catch (_e) {
-    return false
+    return false;
   }
 }
 
-export function isExistProperty(obj: Object, key: string | number | symbol): boolean {
-  return obj.hasOwnProperty(key)
+export function isExistProperty(
+  obj: Record<string, unknown>,
+  key: string | number | symbol
+): boolean {
+  return Object.prototype.hasOwnProperty.call(obj, key);
 }
