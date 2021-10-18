@@ -1,5 +1,5 @@
 import { _global, _support } from "./global";
-const PREFIX = "MITO Logger";
+const PREFIX = "VelKoz Logger";
 
 export class Logger {
   private enabled = false;
@@ -19,7 +19,7 @@ export class Logger {
     this.enabled = false;
   }
 
-  bindOptions(debug: boolean): void {
+  bindOptions(debug?: boolean): void {
     this.enabled = debug ? true : false;
   }
 

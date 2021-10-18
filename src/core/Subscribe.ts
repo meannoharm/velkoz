@@ -1,4 +1,4 @@
-import { getFunctionName, logger, nativeTryCatch } from "@/utils";
+import { getFunctionName, logger } from "@/utils";
 
 type MonitorCallback = (data: any) => void;
 /**
@@ -10,7 +10,7 @@ type MonitorCallback = (data: any) => void;
  */
 export default class Subscribe<T> {
   dep: Map<T, MonitorCallback[]> = new Map();
-  constructor() {}
+  // 订阅
   watch(eventName: T, callBack: (data: any) => any) {
     const fns = this.dep.get(eventName);
     if (fns) {
@@ -19,22 +19,20 @@ export default class Subscribe<T> {
     }
     this.dep.set(eventName, [callBack]);
   }
+  // 发布
   notify<D = any>(eventName: T, data: D) {
     const fns = this.dep.get(eventName);
     if (!eventName || !fns) return;
     fns.forEach((fn) => {
-      nativeTryCatch(
-        () => {
-          fn(data);
-        },
-        (e: Error) => {
-          logger.error(
-            `Subscribe.notify：监听事件的回调函数发生错误\neventName:${eventName}\nName: ${getFunctionName(
-              fn
-            )}\nError: ${e}`
-          );
-        }
-      );
+      try {
+        fn(data);
+      } catch (e) {
+        logger.error(
+          `Subscribe.notify：监听事件的回调函数发生错误\neventName:${eventName}\nName: ${getFunctionName(
+            fn
+          )}\nError: ${e}`
+        );
+      }
     });
   }
 }
