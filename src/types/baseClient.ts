@@ -10,7 +10,7 @@ export interface BaseClientType<
    * @memberof BaseClientType
    * @static
    */
-  SDK_NAME?: string;
+  SDK_NAME: string;
   /**
    *SDK版本
    *

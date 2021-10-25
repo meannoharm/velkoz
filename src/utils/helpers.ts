@@ -1,4 +1,4 @@
-import { ToStringTypes } from "@/constants";
+import { globalVar, ToStringTypes } from "@/constants";
 import { logger } from "./logger";
 import { nativeToString } from "./is";
 
@@ -56,4 +56,20 @@ export function validateOptionsAndSet(
       toStringValidateOption(target, targetName, expectType) &&
       (this[targetName] = target)
   );
+}
+
+/**
+ * 获取当前的时间戳
+ *
+ * @export
+ * @return {*}  {number}
+ */
+export function getTimestamp(): number {
+  return Date.now();
+}
+
+export function silentConsoleScope(callback: Function) {
+  globalVar.isLogAddBreadcrumb = false;
+  callback();
+  globalVar.isLogAddBreadcrumb = true;
 }

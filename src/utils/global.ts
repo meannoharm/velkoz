@@ -17,8 +17,8 @@ export interface VelKozSupport {
 }
 
 interface VelKozGlobal {
-  console?: Console;
-  __VelKoz__?: VelKozSupport;
+  console: Console;
+  __VelKoz__: VelKozSupport;
 }
 
 export const isNodeEnv = variableTypeDetection.isProcess(

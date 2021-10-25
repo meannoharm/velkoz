@@ -1,7 +1,6 @@
 import {
   logger,
   Queue,
-  isInclude,
   createErrorId,
   isEmpty,
   validateOptionsAndSet,
@@ -94,7 +93,7 @@ export default abstract class BaseTransport<
    * @memberof BaseTransport
    */
   isSelfDsn(targetUrl: string): boolean {
-    return this.dsn && isInclude(targetUrl, this.dsn);
+    return !!(this.dsn && targetUrl.includes(this.dsn));
   }
 
   /**

@@ -21,7 +21,7 @@ import type {
  * @template O
  * @template E
  */
-export default abstract class BaseClient<
+export abstract class BaseClient<
   O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType,
   E extends EventTypes = EventTypes
 > implements BaseClientType

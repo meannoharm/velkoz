@@ -75,9 +75,9 @@ export const enum BREADCRUMBCATEGORYS {
  */
 export type EventTypes = BrowserEventTypes | BaseEventTypes;
 
-export const MitoLog = "Mito.log";
-export const MitoLogEmptyMsg = "empty.msg";
-export const MitoLogEmptyTag = "empty.tag";
+export const VelkozLog = "Velkoz.log";
+export const VelkozLogEmptyMsg = "empty.msg";
+export const VelkozLogEmptyTag = "empty.tag";
 
 export const enum BaseEventTypes {
   VUE = "vue",
@@ -118,6 +118,7 @@ export const enum ToStringTypes {
 
 export const ERROR_TYPE_RE =
   /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/;
+
 const globalVar = {
   isLogAddBreadcrumb: true,
   crossOriginThreshold: 1000,

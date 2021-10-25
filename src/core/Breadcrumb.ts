@@ -10,6 +10,8 @@ import type {
   BreadcrumbPushData,
 } from "@/types";
 
+const MAX_BREADCRUMBS = 10;
+
 /**
  * 用户行为栈存储，实体类
  *
@@ -17,10 +19,10 @@ import type {
  * @class Breadcrumb
  * @template O
  */
-export default class Breadcrumb<
+export class Breadcrumb<
   O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType
 > {
-  private maxBreadcrumbs = 10;
+  private maxBreadcrumbs = MAX_BREADCRUMBS;
   private beforePushBreadcrumb: unknown = null;
   private stack: BreadcrumbPushData[] = [];
   constructor(options: Partial<O> = {}) {
@@ -34,7 +36,7 @@ export default class Breadcrumb<
    */
   push(data: BreadcrumbPushData): BreadcrumbPushData[] {
     if (typeof this.beforePushBreadcrumb === "function") {
-      let result: BreadcrumbPushData = null;
+      let result: BreadcrumbPushData | null = null;
       const beforePushBreadcrumb = this.beforePushBreadcrumb;
       silentConsoleScope(() => {
         result = beforePushBreadcrumb.call(this, this, data);
@@ -75,7 +77,7 @@ export default class Breadcrumb<
       maxBreadcrumbs,
       "maxBreadcrumbs",
       ToStringTypes.Number
-    ) && (this.maxBreadcrumbs = maxBreadcrumbs);
+    ) && (this.maxBreadcrumbs = maxBreadcrumbs || MAX_BREADCRUMBS);
     toStringValidateOption(
       beforePushBreadcrumb,
       "beforePushBreadcrumb",
