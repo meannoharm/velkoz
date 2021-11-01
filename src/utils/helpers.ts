@@ -2,6 +2,8 @@ import { globalVar, ToStringTypes } from "@/constants";
 import { logger } from "./logger";
 import { nativeToString, variableTypeDetection } from "./is";
 
+import type { IAnyObject } from "@/types";
+
 export function getLocationHref(): string {
   if (typeof document === "undefined" || document.location == null) return "";
   return document.location.href;
@@ -42,6 +44,44 @@ export function toStringValidateOption(target: any, targetName: string, expectTy
   if (toStringAny(target, expectType)) return true;
   typeof target !== "undefined" && logger.error(`${targetName}期望传入:${expectType}类型，当前是:${nativeToString.call(target)}类型`);
   return false;
+}
+
+/**
+ * 添加事件监听器
+ *
+ * @export
+ * @param {{ addEventListener: Function }} target 目标对象
+ * @param {TotalEventName} eventName 目标对象上的事件名
+ * @param {Function} handler 回调函数
+ * @param {(boolean | unknown)} [opitons=false] useCapture默认为false
+ */
+export function on(
+  target: { addEventListener: Function },
+  eventName: TotalEventName,
+  handler: Function,
+  opitons: boolean | unknown = false
+): void {
+  target.addEventListener(eventName, handler, opitons);
+}
+
+/**
+ * 重写对象上面的某个属性
+ *
+ * @export
+ * @param {IAnyObject} source 需要被重写的对象
+ * @param {string} name 需要被重写对象的key
+ * @param {(...args: any[]) => any} replacement 以原有的函数作为参数，执行并重写原有函数
+ * @param {boolean} [isForced=false] 是否强制重写（可能原先没有该属性）
+ */
+export function replaceOld(source: IAnyObject, name: string, replacement: (...args: any[]) => any, isForced = false): void {
+  if (source === undefined) return;
+  if (name in source || isForced) {
+    const original = source[name];
+    const wrapped = replacement(original);
+    if (typeof wrapped === "function") {
+      source[name] = wrapped;
+    }
+  }
 }
 
 export function validateOptionsAndSet(this: any, targetArr: [any, string, ToStringTypes][]) {

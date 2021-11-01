@@ -18,6 +18,8 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
+    "declaration": true,
+    "declarationDir": "./dist",
     "paths": {
       "@/*": ["./src/*"]
     }
