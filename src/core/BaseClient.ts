@@ -3,12 +3,7 @@ import { logger } from "@/utils";
 import BaseTransport from "./BaseTransport";
 import Breadcrumb from "./Breadcrumb";
 import Subscribe from "./Subscribe";
-import type {
-  BaseClientType,
-  BaseOptionsFieldsIntegrationType,
-  BasePluginType,
-  LogTypes,
-} from "@/types";
+import type { BaseClientType, BaseOptionsFieldsIntegrationType, BasePluginType, LogTypes } from "@/types";
 
 /**
  * 抽象客户端，已实现插件和钩子函数的定义

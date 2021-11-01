@@ -21,13 +21,9 @@ interface VelKozGlobal {
   __VelKoz__: VelKozSupport;
 }
 
-export const isNodeEnv = variableTypeDetection.isProcess(
-  typeof process !== "undefined" ? process : 0
-);
+export const isNodeEnv = variableTypeDetection.isProcess(typeof process !== "undefined" ? process : 0);
 
-export const isBrowserEnv = variableTypeDetection.isWindow(
-  typeof window !== "undefined" ? window : 0
-);
+export const isBrowserEnv = variableTypeDetection.isWindow(typeof window !== "undefined" ? window : 0);
 
 /**
  * 获取全局变量
@@ -59,9 +55,6 @@ export function supportsHistory(): boolean {
   // borrowed from: https://github.com/angular/angular.js/pull/13945/files
   const { chrome } = _global as any;
   const isChromePackagedApp = chrome && chrome.app && chrome.app.runtime;
-  const hasHistoryApi =
-    "history" in _global &&
-    !!_global.history.pushState &&
-    !!_global.history.replaceState;
+  const hasHistoryApi = "history" in _global && !!_global.history.pushState && !!_global.history.replaceState;
   return !isChromePackagedApp && hasHistoryApi;
 }

@@ -64,11 +64,7 @@ export function isEmptyObject(obj: Record<string, unknown>): boolean {
  * @return {*}  {boolean}
  */
 export function isEmpty(wat: any): boolean {
-  return (
-    (variableTypeDetection.isString(wat) && wat.trim() === "") ||
-    wat === undefined ||
-    wat === null
-  );
+  return (variableTypeDetection.isString(wat) && wat.trim() === "") || wat === undefined || wat === null;
 }
 
 /**
@@ -88,9 +84,6 @@ export function isInstanceOf(wat: any, base: any): boolean {
   }
 }
 
-export function isExistProperty(
-  obj: Record<string, unknown>,
-  key: string | number | symbol
-): boolean {
+export function isExistProperty(obj: Record<string, unknown>, key: string | number | symbol): boolean {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }

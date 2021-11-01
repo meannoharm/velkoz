@@ -23,10 +23,7 @@ import { BrowserTransport } from "./browserTransport";
 import type { LogTypes } from "@/types";
 import type { BrowserOptionsFieldsTypes } from "./types";
 
-export class BrowserClient extends BaseClient<
-  BrowserOptionsFieldsTypes,
-  EventTypes
-> {
+export class BrowserClient extends BaseClient<BrowserOptionsFieldsTypes, EventTypes> {
   transport: BrowserTransport;
   options: BrowserOptions;
   breadcrumb: Breadcrumb<BrowserOptionsFieldsTypes>;
@@ -48,12 +45,7 @@ export class BrowserClient extends BaseClient<
     return !this.options[silentField];
   }
   log(data: LogTypes) {
-    const {
-      message = VelkozLogEmptyMsg,
-      tag = VelkozLogEmptyTag,
-      level = Severity.Critical,
-      ex = "",
-    } = data;
+    const { message = VelkozLogEmptyMsg, tag = VelkozLogEmptyTag, level = Severity.Critical, ex = "" } = data;
     let errorInfo = {};
     if (isError(ex)) {
       errorInfo = extractErrorStack(ex, level);

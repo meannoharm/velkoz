@@ -5,3 +5,4 @@ export * from "./global";
 export * from "./helpers";
 export * from "./Queue";
 export * from "./errorId";
+export * from "./browser";

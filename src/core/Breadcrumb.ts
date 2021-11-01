@@ -1,14 +1,6 @@
 import { ToStringTypes } from "@/constants";
-import {
-  logger,
-  getTimestamp,
-  silentConsoleScope,
-  toStringValidateOption,
-} from "@/utils";
-import type {
-  BaseOptionsFieldsIntegrationType,
-  BreadcrumbPushData,
-} from "@/types";
+import { logger, getTimestamp, silentConsoleScope, toStringValidateOption } from "@/utils";
+import type { BaseOptionsFieldsIntegrationType, BreadcrumbPushData } from "@/types";
 
 const MAX_BREADCRUMBS = 10;
 
@@ -19,9 +11,7 @@ const MAX_BREADCRUMBS = 10;
  * @class Breadcrumb
  * @template O
  */
-export class Breadcrumb<
-  O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType
-> {
+export class Breadcrumb<O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType> {
   private maxBreadcrumbs = MAX_BREADCRUMBS;
   private beforePushBreadcrumb: unknown = null;
   private stack: BreadcrumbPushData[] = [];
@@ -73,15 +63,9 @@ export class Breadcrumb<
 
   bindOptions(options: Partial<O> = {}): void {
     const { maxBreadcrumbs, beforePushBreadcrumb } = options;
-    toStringValidateOption(
-      maxBreadcrumbs,
-      "maxBreadcrumbs",
-      ToStringTypes.Number
-    ) && (this.maxBreadcrumbs = maxBreadcrumbs || MAX_BREADCRUMBS);
-    toStringValidateOption(
-      beforePushBreadcrumb,
-      "beforePushBreadcrumb",
-      ToStringTypes.Function
-    ) && (this.beforePushBreadcrumb = beforePushBreadcrumb);
+    toStringValidateOption(maxBreadcrumbs, "maxBreadcrumbs", ToStringTypes.Number) &&
+      (this.maxBreadcrumbs = maxBreadcrumbs || MAX_BREADCRUMBS);
+    toStringValidateOption(beforePushBreadcrumb, "beforePushBreadcrumb", ToStringTypes.Function) &&
+      (this.beforePushBreadcrumb = beforePushBreadcrumb);
   }
 }

@@ -13,20 +13,11 @@ const allErrorNumber: unknown = {};
  * @param {number} maxDuplicateCount init配置项，最多可重复上报同一个错误的次数
  * @return {*}  {(number | null)}
  */
-export function createErrorId(
-  data: ReportDataType,
-  apikey: string,
-  maxDuplicateCount: number
-): number | null {
+export function createErrorId(data: ReportDataType, apikey: string, maxDuplicateCount: number): number | null {
   let id: any;
   switch (data.type) {
     case ErrorTypes.HTTP:
-      id =
-        data.type +
-        data.request.method +
-        data.response.status +
-        getRealPath(data.request.url) +
-        apikey;
+      id = data.type + data.request.method + data.response.status + getRealPath(data.request.url) + apikey;
       break;
     case ErrorTypes.JAVASCRIPT:
     case ErrorTypes.VUE:
@@ -66,9 +57,7 @@ function generatePromiseErrorId(data: ReportDataType, apikey: string) {
   if (data.name === BrowserEventTypes.UNHANDLEDREJECTION) {
     return data.type + stringToObjAndOrder(data.message) + apikey;
   }
-  return (
-    data.type + data.name + stringToObjAndOrder(data.message) + locationUrl
-  );
+  return data.type + data.name + stringToObjAndOrder(data.message) + locationUrl;
 }
 
 export function sortObjByKey<T = object>(obj: T): T {

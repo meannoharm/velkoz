@@ -27,11 +27,7 @@ export default class Subscribe<T> {
       try {
         fn(data);
       } catch (e) {
-        logger.error(
-          `Subscribe.notify：监听事件的回调函数发生错误\neventName:${eventName}\nName: ${getFunctionName(
-            fn
-          )}\nError: ${e}`
-        );
+        logger.error(`Subscribe.notify：监听事件的回调函数发生错误\neventName:${eventName}\nName: ${getFunctionName(fn)}\nError: ${e}`);
       }
     });
   }

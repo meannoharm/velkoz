@@ -1,9 +1,6 @@
 import { BaseOptionsFieldsIntegrationType } from "@/types";
 
-export interface BrowserOptionsFieldsTypes
-  extends BrowsersilentOptionsType,
-    BaseOptionsFieldsIntegrationType,
-    BrowserOptionsHooksType {
+export interface BrowserOptionsFieldsTypes extends BrowsersilentOptionsType, BaseOptionsFieldsIntegrationType, BrowserOptionsHooksType {
   /**
    * 默认为false，默认是xhr的上报方式，
    * 为true时，则使用img上报的方式，会在dsn后面追加data=encodeURIComponent(reportData)，在服务端接受时需要decodeURIComponent

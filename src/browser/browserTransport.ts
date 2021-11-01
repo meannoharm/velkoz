@@ -29,17 +29,13 @@ export class BrowserTransport extends BaseTransport<BrowserOptionsFieldsTypes> {
     const requestFun = () => {
       let img = new Image();
       const spliceStr = url.indexOf("?") === -1 ? "?" : "&";
-      img.src = `${url}${spliceStr}data=${encodeURIComponent(
-        safeStringify(data)
-      )}`;
+      img.src = `${url}${spliceStr}data=${encodeURIComponent(safeStringify(data))}`;
       img = null;
     };
     this.queue.addTask(requestFun);
   }
   sendToServer(data: any, url: string) {
-    return this.useImgUpload
-      ? this.imgRequest(data, url)
-      : this.post(data, url);
+    return this.useImgUpload ? this.imgRequest(data, url) : this.post(data, url);
   }
   getTransportData(data: ReportDataType) {
     return {
@@ -49,15 +45,7 @@ export class BrowserTransport extends BaseTransport<BrowserOptionsFieldsTypes> {
   }
   bindOptions(options: BrowserOptionsFieldsTypes = {}) {
     const { configReportXhr, useImgUpload } = options;
-    toStringValidateOption(
-      configReportXhr,
-      "configReportXhr",
-      ToStringTypes.Function
-    ) && (this.configReportXhr = configReportXhr);
-    toStringValidateOption(
-      useImgUpload,
-      "useImgUpload",
-      ToStringTypes.Boolean
-    ) && (this.useImgUpload = useImgUpload);
+    toStringValidateOption(configReportXhr, "configReportXhr", ToStringTypes.Function) && (this.configReportXhr = configReportXhr);
+    toStringValidateOption(useImgUpload, "useImgUpload", ToStringTypes.Boolean) && (this.useImgUpload = useImgUpload);
   }
 }

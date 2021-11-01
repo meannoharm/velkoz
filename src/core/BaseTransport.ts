@@ -1,18 +1,6 @@
-import {
-  logger,
-  Queue,
-  createErrorId,
-  isEmpty,
-  validateOptionsAndSet,
-} from "@/utils";
+import { logger, Queue, createErrorId, isEmpty, validateOptionsAndSet } from "@/utils";
 import { SDK_NAME, SDK_VERSION, ToStringTypes } from "@/constants";
-import type {
-  AuthInfo,
-  BaseOptionsFieldsIntegrationType,
-  BreadcrumbPushData,
-  ReportDataType,
-  TransportDataType,
-} from "@/types";
+import type { AuthInfo, BaseOptionsFieldsIntegrationType, BreadcrumbPushData, ReportDataType, TransportDataType } from "@/types";
 
 /**
  * 传输数据抽象类
@@ -22,22 +10,14 @@ import type {
  * @class BaseTransport
  * @template O
  */
-export default abstract class BaseTransport<
-  O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType
-> {
+export default abstract class BaseTransport<O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType> {
   apikey = "";
 
   dsn = "";
 
   queue: Queue;
 
-  beforeDataReport:
-    | Promise<TransportDataType | null | undefined | boolean>
-    | TransportDataType
-    | any
-    | null
-    | undefined
-    | boolean = null;
+  beforeDataReport: Promise<TransportDataType | null | undefined | boolean> | TransportDataType | any | null | undefined | boolean = null;
 
   backTrackerId: unknown = null;
 
@@ -78,9 +58,7 @@ export default abstract class BaseTransport<
       if (typeof trackerId === "string" || typeof trackerId === "number") {
         return trackerId;
       }
-      logger.error(
-        `trackerId:${trackerId} 期望 string 或 number 类型，但是传入 ${typeof trackerId}`
-      );
+      logger.error(`trackerId:${trackerId} 期望 string 或 number 类型，但是传入 ${typeof trackerId}`);
     }
     return "";
   }
@@ -103,14 +81,7 @@ export default abstract class BaseTransport<
    * @memberof BaseTransport
    */
   bindOptions(options: Partial<O> = {}): void {
-    const {
-      dsn,
-      beforeDataReport,
-      apikey,
-      maxDuplicateCount,
-      backTrackerId,
-      configReportUrl,
-    } = options;
+    const { dsn, beforeDataReport, apikey, maxDuplicateCount, backTrackerId, configReportUrl } = options;
     const functionType = ToStringTypes.Function;
     const optionArr = [
       [apikey, "apikey", ToStringTypes.String],

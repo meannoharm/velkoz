@@ -1,6 +1,15 @@
 import { globalVar, ToStringTypes } from "@/constants";
 import { logger } from "./logger";
-import { nativeToString } from "./is";
+import { nativeToString, variableTypeDetection } from "./is";
+
+export function getLocationHref(): string {
+  if (typeof document === "undefined" || document.location == null) return "";
+  return document.location.href;
+}
+
+export function getUrlWithEnv(): string {
+  return getLocationHref();
+}
 
 export const defaultFunctionName = "<anonymous>";
 /**
@@ -17,14 +26,11 @@ export function getFunctionName(fn: unknown): string {
 
 export function generateUUID(): string {
   let d = new Date().getTime();
-  const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-    /[xy]/g,
-    function (c) {
-      const r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-    }
-  );
+  const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
   return uuid;
 }
 
@@ -32,29 +38,15 @@ export function toStringAny(target: any, type: ToStringTypes): boolean {
   return nativeToString.call(target) === `[object ${type}]`;
 }
 
-export function toStringValidateOption(
-  target: any,
-  targetName: string,
-  expectType: ToStringTypes
-): boolean {
+export function toStringValidateOption(target: any, targetName: string, expectType: ToStringTypes): boolean {
   if (toStringAny(target, expectType)) return true;
-  typeof target !== "undefined" &&
-    logger.error(
-      `${targetName}期望传入:${expectType}类型，当前是:${nativeToString.call(
-        target
-      )}类型`
-    );
+  typeof target !== "undefined" && logger.error(`${targetName}期望传入:${expectType}类型，当前是:${nativeToString.call(target)}类型`);
   return false;
 }
 
-export function validateOptionsAndSet(
-  this: any,
-  targetArr: [any, string, ToStringTypes][]
-) {
+export function validateOptionsAndSet(this: any, targetArr: [any, string, ToStringTypes][]) {
   targetArr.forEach(
-    ([target, targetName, expectType]) =>
-      toStringValidateOption(target, targetName, expectType) &&
-      (this[targetName] = target)
+    ([target, targetName, expectType]) => toStringValidateOption(target, targetName, expectType) && (this[targetName] = target)
   );
 }
 
@@ -68,8 +60,32 @@ export function getTimestamp(): number {
   return Date.now();
 }
 
-export function silentConsoleScope(callback: Function) {
+export function silentConsoleScope(callback: (...argument: any) => any) {
   globalVar.isLogAddBreadcrumb = false;
   callback();
   globalVar.isLogAddBreadcrumb = true;
+}
+
+/**
+ *将传入的字符串的首字母改为大写，其他不变
+ *
+ * @export
+ * @param {string} str 原字符
+ * @return {*}  {string}
+ * @example xhr => Xhr
+ */
+export function firstStrtoUppercase(str: string): string {
+  return str.replace(/\b(\w)(\w*)/g, function ($0: string, $1: string, $2: string) {
+    return `${$1.toUpperCase()}${$2}`;
+  });
+}
+
+export function unknownToString(target: unknown): string {
+  if (variableTypeDetection.isString(target)) {
+    return target as string;
+  }
+  if (variableTypeDetection.isUndefined(target)) {
+    return "undefined";
+  }
+  return JSON.stringify(target);
 }
