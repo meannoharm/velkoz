@@ -1,8 +1,6 @@
 import type { BaseOptionsFieldsIntegrationType } from "./baseOptions";
 
-export interface BaseClientType<
-  O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType
-> {
+export interface BaseClientType<O extends BaseOptionsFieldsIntegrationType = BaseOptionsFieldsIntegrationType> {
   /**
    *SDK名称
    *

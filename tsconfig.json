@@ -21,11 +21,9 @@
     "declaration": true,
     "declarationDir": "./dist",
     "paths": {
-      "@/*": ["./src/*"]
+      "@velkoz/*": ["packages/*/src"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["packages/*/src"],
   "exclude": ["node_modules"]
 }
