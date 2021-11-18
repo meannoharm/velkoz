@@ -8,7 +8,7 @@ type MonitorCallback = (data: any) => void;
  * @class Subscribe
  * @template T 事件枚举
  */
-export default class Subscribe<T> {
+export class Subscribe<T> {
   dep: Map<T, MonitorCallback[]> = new Map();
   // 订阅
   watch(eventName: T, callBack: (data: any) => any) {

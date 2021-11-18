@@ -7,25 +7,17 @@ export interface IBeforeAppAjaxSendConfig {
   setRequestHeader: TSetRequestHeader;
 }
 
-export type HttpMethod =
-  | "GET"
-  | "POST"
-  | "PATCH"
-  | "PUT"
-  | "DELETE"
-  | "OPTIONS";
+export type HttpMethod = "GET" | "POST" | "PATCH" | "PUT" | "DELETE" | "OPTIONS";
 
 interface IRequestHeaderConfig {
   url: HttpMethod;
   method: string;
 }
-export interface BaseOptionsType<O extends BaseOptionsFieldsIntegrationType>
-  extends BaseOptionsFieldsIntegrationType {
+export interface BaseOptionsType<O extends BaseOptionsFieldsIntegrationType> extends BaseOptionsFieldsIntegrationType {
   bindOptions(options: O): void;
 }
 
-export type BaseOptionsFieldsIntegrationType = BaseOptionsFieldsType &
-  BaseOptionsHooksType;
+export type BaseOptionsFieldsIntegrationType = BaseOptionsFieldsType & BaseOptionsHooksType;
 
 export interface BaseOptionsFieldsType {
   /**
@@ -84,14 +76,8 @@ export interface BaseOptionsHooksType {
    * @return {*}  {(Promise<TransportDataType | null | CANCEL> | TransportDataType | any | CANCEL | null)} 如果返回 null | undefined | boolean 时，将忽略本次上传
    * @memberof BaseOptionsHooksType
    */
-  beforeDataReport?(
-    event: TransportDataType
-  ):
-    | Promise<TransportDataType | null | CANCEL>
-    | TransportDataType
-    | any
-    | CANCEL
-    | null;
+  beforeDataReport?(event: TransportDataType): Promise<TransportDataType | null | CANCEL> | TransportDataType | any | CANCEL | null;
+
   /**
    *
    * 钩子函数，每次发送前都会调用
@@ -101,6 +87,7 @@ export interface BaseOptionsHooksType {
    * @memberof BaseOptionsHooksType
    */
   configReportUrl?(event: TransportDataType, url: string): string;
+
   /**
    * 钩子函数:在每次添加用户行为事件前都会调用
    *
@@ -109,10 +96,8 @@ export interface BaseOptionsHooksType {
    * @return {*}  {(BreadcrumbPushData | CANCEL)} 如果返回 null | undefined | boolean 时，将忽略本次的push
    * @memberof BaseOptionsHooksType
    */
-  beforePushBreadcrumb?(
-    breadcrumb: Breadcrumb,
-    hint: BreadcrumbPushData
-  ): BreadcrumbPushData | CANCEL;
+  beforePushBreadcrumb?(breadcrumb: Breadcrumb, hint: BreadcrumbPushData): BreadcrumbPushData | CANCEL;
+
   /**
    * 钩子函数:拦截用户页面的ajax请求，并在ajax请求发送前执行该hook，可以对用户发送的ajax请求做xhr.setRequestHeader
    *
@@ -120,10 +105,8 @@ export interface BaseOptionsHooksType {
    * @param {IBeforeAppAjaxSendConfig} setRequestHeader 设置请求头函数
    * @memberof BaseOptionsHooksType
    */
-  beforeAppAjaxSend?(
-    config: IRequestHeaderConfig,
-    setRequestHeader: IBeforeAppAjaxSendConfig
-  ): void;
+  beforeAppAjaxSend?(config: IRequestHeaderConfig, setRequestHeader: IBeforeAppAjaxSendConfig): void;
+
   /**
    *钩子函数:在beforeDataReport后面调用，在整合上报数据和本身SDK信息数据前调用，当前函数执行完后立即将数据错误信息上报至服务端
    *trackerId表示用户唯一键（可以理解成userId），需要trackerId的意义可以区分每个错误影响的用户数量

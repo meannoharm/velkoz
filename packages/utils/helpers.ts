@@ -4,6 +4,9 @@ import { nativeToString, variableTypeDetection } from "./is";
 
 import type { IAnyObject } from "@/types";
 
+// 用到所有事件的名称
+type TotalEventName = keyof GlobalEventHandlersEventMap | keyof XMLHttpRequestEventTargetEventMap | keyof WindowEventMap;
+
 export function getLocationHref(): string {
   if (typeof document === "undefined" || document.location == null) return "";
   return document.location.href;
@@ -53,15 +56,15 @@ export function toStringValidateOption(target: any, targetName: string, expectTy
  * @param {{ addEventListener: Function }} target 目标对象
  * @param {TotalEventName} eventName 目标对象上的事件名
  * @param {Function} handler 回调函数
- * @param {(boolean | unknown)} [opitons=false] useCapture默认为false
+ * @param {(boolean | unknown)} [options=false] useCapture默认为false
  */
 export function on(
   target: { addEventListener: Function },
   eventName: TotalEventName,
   handler: Function,
-  opitons: boolean | unknown = false
+  options: boolean | unknown = false
 ): void {
-  target.addEventListener(eventName, handler, opitons);
+  target.addEventListener(eventName, handler, options);
 }
 
 /**
