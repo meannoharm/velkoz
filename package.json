@@ -3,31 +3,21 @@
   "version": "0.0.1",
   "license": "MIT",
   "author": "gao",
-  "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
-    "@babel/preset-typescript": "^7.16.0",
-    "@types/node": "^16.10.5",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+  "scripts": {
+    "preinstall": "node ./scripts/checkYarn.js",
+    "build": "rollup -c"
+  },
+  "dependencies": {
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint": "^8.0.1",
-    "execa": "^4.0.3",
-    "lerna": "^4.0.0",
-    "ora": "^5.0.0",
-    "prettier-eslint": "^13.0.0",
+    "eslint": "^8.2.0",
     "prettier": "^2.4.1",
-    "rimraf": "^3.0.2",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-uglify": "^6.0.4",
     "rollup": "^2.60.0",
-    "typescript": "^4.4.3",
-    "zlib": "^1.0.5"
-  },
-  "scripts": {
-    "preinstall": "node ./scripts/checkYarn.js",
-    "build": "node ./scripts/build.js"
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "tti-polyfill": "^0.2.2",
+    "typescript": "^4.5.2",
+    "web-vitals": "^2.1.2"
   }
 }
