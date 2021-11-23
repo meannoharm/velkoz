@@ -1,3 +1,3 @@
-import Velkoz from './Velkoz';
+import Velkoz from "./Velkoz";
 
 export default Velkoz;

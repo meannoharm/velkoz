@@ -1,100 +1,97 @@
-import { warn } from './debug'
+import { warn } from "./debug";
 
 interface Events {
-  [name: string]: [WithFnFunction, Object][]
+  [name: string]: [WithFnFunction, Object][];
 }
 
 interface EventTypes {
-  [type: string]: string
+  [type: string]: string;
 }
 
 interface WithFnFunction extends Function {
-  fn?: Function
+  fn?: Function;
 }
 
 export class EventEmitter {
-  events: Events
-  eventTypes: EventTypes
+  events: Events;
+  eventTypes: EventTypes;
   constructor(names: string[]) {
-    this.events = {}
-    this.eventTypes = {}
-    this.registerType(names)
+    this.events = {};
+    this.eventTypes = {};
+    this.registerType(names);
   }
 
   on(type: string, fn: Function, context: Object = this) {
-    this.hasType(type)
+    this.hasType(type);
     if (!this.events[type]) {
-      this.events[type] = []
+      this.events[type] = [];
     }
 
-    this.events[type].push([fn, context])
-    return this
+    this.events[type].push([fn, context]);
+    return this;
   }
 
   once(type: string, fn: Function, context: Object = this) {
-    this.hasType(type)
+    this.hasType(type);
     const magic = (...args: any[]) => {
-      this.off(type, magic)
-      const ret = fn.apply(context, args)
+      this.off(type, magic);
+      const ret = fn.apply(context, args);
       if (ret === true) {
-        return ret
+        return ret;
       }
-    }
-    magic.fn = fn
+    };
+    magic.fn = fn;
 
-    this.on(type, magic)
-    return this
+    this.on(type, magic);
+    return this;
   }
 
   off(type?: string, fn?: Function) {
     if (!type && !fn) {
-      this.events = {}
-      return this
+      this.events = {};
+      return this;
     }
 
     if (type) {
-      this.hasType(type)
+      this.hasType(type);
       if (!fn) {
-        this.events[type] = []
-        return this
+        this.events[type] = [];
+        return this;
       }
 
-      let events = this.events[type]
+      const events = this.events[type];
       if (!events) {
-        return this
+        return this;
       }
 
-      let count = events.length
+      let count = events.length;
       while (count--) {
-        if (
-          events[count][0] === fn ||
-          (events[count][0] && events[count][0].fn === fn)
-        ) {
-          events.splice(count, 1)
+        if (events[count][0] === fn || (events[count][0] && events[count][0].fn === fn)) {
+          events.splice(count, 1);
         }
       }
 
-      return this
+      return this;
     }
   }
 
   trigger(type: string, ...args: any[]) {
-    this.hasType(type)
-    let events = this.events[type]
+    this.hasType(type);
+    const events = this.events[type];
     if (!events) {
-      return
+      return;
     }
 
-    let len = events.length
-    let eventsCopy = [...events]
-    let ret
+    const len = events.length;
+    const eventsCopy = [...events];
+    let ret;
     for (let i = 0; i < len; i++) {
-      let event = eventsCopy[i]
-      let [fn, context] = event
+      const event = eventsCopy[i];
+      const [fn, context] = event;
       if (fn) {
-        ret = fn.apply(context, args)
+        ret = fn.apply(context, args);
         if (ret === true) {
-          return ret
+          return ret;
         }
       }
     }
@@ -102,24 +99,24 @@ export class EventEmitter {
 
   registerType(names: string[]) {
     names.forEach((type: string) => {
-      this.eventTypes[type] = type
-    })
+      this.eventTypes[type] = type;
+    });
   }
 
   destroy() {
-    this.events = {}
-    this.eventTypes = {}
+    this.events = {};
+    this.eventTypes = {};
   }
 
   private hasType(type: string) {
-    const types = this.eventTypes
-    const isType = types[type] === type
+    const types = this.eventTypes;
+    const isType = types[type] === type;
     if (!isType) {
       warn(
         `EventEmitter has used unknown event type: "${type}", should be oneof [` +
           `${Object.keys(types).map((_) => JSON.stringify(_))}` +
           `]`
-      )
+      );
     }
   }
 }

@@ -1,4 +1,4 @@
-import {LevelType} from '@velkoz/shared-utils';
+import { LevelType } from "@velkoz/shared-utils";
 
 export interface CustomOptions {}
 
@@ -19,20 +19,20 @@ export class OptionsConstructor extends CustomOptions implements DefOptions {
   level: LevelType[];
   autoPush: boolean;
 
-  constructor () {
+  constructor() {
     super();
-    this.url = '';
-    this.token = '';
+    this.url = "";
+    this.token = "";
     this.match = [];
     this.level = [LevelType.ERROR];
     this.autoPush = true;
   }
 
   merge(options?: Options) {
-    if (!options) return this
-    for (let key in options) {
-      this[key] = options[key]
+    if (!options) return this;
+    for (const key in options) {
+      this[key] = options[key];
     }
-    return this
+    return this;
   }
 }

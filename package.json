@@ -1,6 +1,6 @@
 {
   "name": "velkoz",
-  "version": "0.0.1",
+  "private": true,
   "license": "MIT",
   "author": "gao",
   "scripts": {
@@ -10,7 +10,9 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "eslint": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.0.0",

@@ -1,10 +1,10 @@
-import type { Action } from '@velkoz/shared-utils';
-import {isNotExist} from './utils';
+import type { Action } from "@velkoz/shared-utils";
+import { isNotExist } from "./utils";
 
-export const KEY = '__velkoz_storage_key__';
+export const KEY = "__velkoz_storage_key__";
 
 export class Store {
-  get (): Action[] {
+  get(): Action[] {
     const dataJSON = localStorage.getItem(KEY);
     if (!dataJSON) {
       return [];
@@ -13,12 +13,12 @@ export class Store {
     }
   }
 
-  set (data: Action[]) {
+  set(data: Action[]) {
     // 值是数组，不能直接存储，需要转换 JSON.stringify
     localStorage.setItem(KEY, JSON.stringify(data));
   }
 
-  update (data: Action) {
+  update(data: Action) {
     const dataJSON = localStorage.getItem(KEY);
     let log: Action[] = [];
     if (dataJSON) {
@@ -28,7 +28,7 @@ export class Store {
     this.set(log);
   }
 
-  delete () {
+  delete() {
     localStorage.removeItem(KEY);
   }
 }

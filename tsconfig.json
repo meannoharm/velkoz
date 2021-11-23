@@ -19,7 +19,6 @@
     "experimentalDecorators": true,
     "strict": true,
     "declaration": true,
-    "declarationDir": "./dist",
     "paths": {
       "@velkoz/*": ["packages/*/src"]
     }
