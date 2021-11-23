@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "build/dist",
+    "outDir": "dist",
     "module": "esnext",
     "target": "esnext",
     "lib": ["esnext", "dom"],
@@ -19,8 +19,11 @@
     "experimentalDecorators": true,
     "strict": true,
     "declaration": true,
-    "declarationDir": "./dist"
+    "declarationDir": "./dist",
+    "paths": {
+      "@velkoz/*": ["packages/*/src"]
+    }
   },
-  "include": ["src/index"],
+  "include": ["packages/*/src"],
   "exclude": ["node_modules"]
 }

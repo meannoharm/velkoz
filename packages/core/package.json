@@ -1,0 +1,12 @@
+{
+  "name": "@velkoz/core",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/core.js",
+  "module": "dist/core.esm.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {},
+  "license": "MIT"
+}
