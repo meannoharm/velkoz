@@ -1,7 +1,5 @@
 import { LevelType } from "@velkoz/shared-utils";
 
-export interface CustomOptions {}
-
 export interface DefOptions {
   token: string;
   url: string;
@@ -10,9 +8,9 @@ export interface DefOptions {
   autoPush: boolean;
 }
 
-export interface Options extends DefOptions, CustomOptions {}
-export class CustomOptions {}
-export class OptionsConstructor extends CustomOptions implements DefOptions {
+export type Options = DefOptions;
+
+export class OptionsConstructor implements DefOptions {
   token: string;
   url: string;
   match: string[];
@@ -20,7 +18,6 @@ export class OptionsConstructor extends CustomOptions implements DefOptions {
   autoPush: boolean;
 
   constructor() {
-    super();
     this.url = "";
     this.token = "";
     this.match = [];
