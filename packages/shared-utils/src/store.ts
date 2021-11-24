@@ -1,7 +1,6 @@
 import type { Action } from "@velkoz/shared-utils";
-import { isNotExist } from "./utils";
 
-export const KEY = "__velkoz_storage_key__";
+export const KEY = "__velkoz_store__";
 
 export class Store {
   get(): Action[] {

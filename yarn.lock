@@ -993,6 +993,11 @@
   resolved "https://registry.npmmirror.com/@types/semver/download/@types/semver-7.3.9.tgz?cache=0&sync_timestamp=1637273309592&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fsemver%2Fdownload%2F%40types%2Fsemver-7.3.9.tgz#152c6c20a7688c30b967ec1841d31ace569863fc"
   integrity sha1-FSxsIKdojDC5Z+wYQdMazlaYY/w=
 
+"@types/tti-polyfill@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.npmmirror.com/@types/tti-polyfill/download/@types/tti-polyfill-0.2.1.tgz#5eba5f7bc27c812a67534ade816197e5090e5af1"
+  integrity sha1-Xrpfe8J8gSpnU0regWGX5QkOWvE=
+
 "@typescript-eslint/eslint-plugin@^5.4.0":
   version "5.4.0"
   resolved "https://registry.npmmirror.com/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-5.4.0.tgz?cache=0&sync_timestamp=1637448780079&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40typescript-eslint%2Feslint-plugin%2Fdownload%2F%40typescript-eslint%2Feslint-plugin-5.4.0.tgz#05e711a2e7b68342661fde61bccbd1531c19521a"

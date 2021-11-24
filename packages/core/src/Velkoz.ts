@@ -80,6 +80,7 @@ export default class VelkozConstructor<O = Record<string, unknown>> extends Even
     store.update(action);
   }
 
+  // 页面会在卸载时提交本次log
   private registerReport() {
     const { url, autoPush } = this.options;
     function logData() {

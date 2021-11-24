@@ -3,7 +3,7 @@ export enum LevelType {
   ERROR = "ERROR",
 }
 
-export class Action<T = Record<string, unknown>> {
+export class Action<T = unknown> {
   level: LevelType;
   payload: T;
   time: number;

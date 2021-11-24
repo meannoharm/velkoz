@@ -1,4 +1,5 @@
 import { getLCP, getFID, getCLS } from "web-vitals";
+import ttiPolyfill from "tti-polyfill";
 
 // Largest Contentful Paint
 getLCP((data) => console.log("LCP", data));

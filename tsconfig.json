@@ -17,7 +17,8 @@
     "declaration": true,
     "paths": {
       "@velkoz/*": ["packages/*/src"]
-    }
+    },
+    "typeRoots": ["node_modules/@types"]
   },
   "include": ["packages/*/src"],
   "exclude": ["node_modules"]

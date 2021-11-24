@@ -1,6 +1,9 @@
 {
   "name": "velkoz",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "license": "MIT",
   "author": "gao",
   "scripts": {
@@ -25,7 +28,6 @@
     "rollup-plugin-typescript2": "^0.31.0",
     "rollup-plugin-uglify": "^6.0.4",
     "tti-polyfill": "^0.2.2",
-    "typescript": "^4.5.2",
-    "web-vitals": "^2.1.2"
+    "typescript": "^4.5.2"
   }
 }
