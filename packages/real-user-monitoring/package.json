@@ -1,0 +1,19 @@
+{
+  "name": "@velkoz/real-user-monitoring",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/real-user-monitoring.js",
+  "module": "dist/real-user-monitoring.esm.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {},
+  "dependencies": {
+    "@types/tti-polyfill": "^0.2.1",
+    "@velkoz/core": "^0.0.1",
+    "@velkoz/shared-utils": "^0.0.1",
+    "tti-polyfill": "^0.2.2",
+    "web-vitals": "^2.1.2"
+  },
+  "license": "MIT"
+}
