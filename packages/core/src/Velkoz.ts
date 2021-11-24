@@ -51,10 +51,9 @@ export default class VelkozConstructor<O = Record<string, unknown>> extends Even
   }
 
   private applyPlugins() {
-    const options = this.options;
     VelkozConstructor.plugins.forEach((item: PluginItem) => {
       const ctor = item.ctor;
-      if (options[item.name] && typeof ctor === "function") {
+      if (typeof ctor === "function") {
         this.plugins[item.name] = new ctor(this);
       }
     });
@@ -73,7 +72,7 @@ export default class VelkozConstructor<O = Record<string, unknown>> extends Even
       : false;
   };
 
-  private pushException(action: Action) {
+  public pushException(action: Action) {
     if (this.isDomainFilter()) return;
     if (this.isLevelFilter(action.level)) return;
     this.trigger("captureBefore", action);

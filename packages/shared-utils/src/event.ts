@@ -1,7 +1,9 @@
 import { warn } from "./debug";
 
+type AnyFunction = (...arg: any) => any;
+
 interface Events {
-  [name: string]: [WithFnFunction, Object][];
+  [name: string]: [WithFnFunction, unknown][];
 }
 
 interface EventTypes {
@@ -9,7 +11,7 @@ interface EventTypes {
 }
 
 interface WithFnFunction extends Function {
-  fn?: Function;
+  fn?: AnyFunction;
 }
 
 export class EventEmitter {
@@ -21,7 +23,7 @@ export class EventEmitter {
     this.registerType(names);
   }
 
-  on(type: string, fn: Function, context: Object = this) {
+  on(type: string, fn: AnyFunction, context: unknown = this) {
     this.hasType(type);
     if (!this.events[type]) {
       this.events[type] = [];
@@ -31,7 +33,7 @@ export class EventEmitter {
     return this;
   }
 
-  once(type: string, fn: Function, context: Object = this) {
+  once(type: string, fn: AnyFunction, context: unknown = this) {
     this.hasType(type);
     const magic = (...args: any[]) => {
       this.off(type, magic);
@@ -46,7 +48,7 @@ export class EventEmitter {
     return this;
   }
 
-  off(type?: string, fn?: Function) {
+  off(type?: string, fn?: AnyFunction) {
     if (!type && !fn) {
       this.events = {};
       return this;

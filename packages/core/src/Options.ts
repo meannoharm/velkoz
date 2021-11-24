@@ -27,9 +27,7 @@ export class OptionsConstructor implements DefOptions {
 
   merge(options?: Options) {
     if (!options) return this;
-    for (const key in options) {
-      this[key] = options[key];
-    }
+    Object.assign(this, options);
     return this;
   }
 }

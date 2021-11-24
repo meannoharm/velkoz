@@ -1,3 +1,4 @@
+import { Action, LevelType } from "@velkoz/shared-utils";
 import type Velkoz from "@velkoz/core";
 
 export interface NavigationTimingDetail {
@@ -7,10 +8,10 @@ export interface NavigationTimingDetail {
 export default class NavigationTiming {
   static pluginName = "navigation-timing";
   constructor(public velkoz: Velkoz) {
-    this.init();
+    this.init(velkoz);
   }
 
-  private init() {
+  private init(velkoz: Velkoz) {
     window.addEventListener("load", () => {
       setTimeout(() => {
         const timing = window.performance.timing;
@@ -21,6 +22,17 @@ export default class NavigationTiming {
         console.log("白屏时间：", timing.domLoading - timing.fetchStart);
         console.log("domready时间：", timing.domContentLoadedEventEnd - timing.fetchStart);
         console.log("onload时间：", timing.loadEventEnd - timing.fetchStart);
+        velkoz.pushException(
+          new Action(LevelType.INFO, {
+            DNSLookUpTime: timing.domainLookupEnd - timing.domainLookupStart,
+            TCPConnectTime: timing.connectEnd - timing.connectStart,
+            requestTime: timing.responseEnd - timing.responseStart,
+            compileDOMTreeTime: timing.domComplete - timing.domInteractive,
+            blankScreenTime: timing.domLoading - timing.fetchStart,
+            domReadyTime: timing.domContentLoadedEventEnd - timing.fetchStart,
+            onloadTime: timing.loadEventEnd - timing.fetchStart,
+          })
+        );
       }, 0);
     });
   }
