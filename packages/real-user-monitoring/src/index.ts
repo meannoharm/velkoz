@@ -39,11 +39,11 @@ export default class RealUserMonitoring {
 
   private init() {
     // Largest Contentful Paint
-    getLCP(this.put);
+    getLCP((data) => this.put(data));
     // First Input Delay
-    getFID(this.put);
+    getFID((data) => this.put(data));
     // Cumulative Layout Shift
-    getCLS(this.put);
+    getCLS((data) => this.put(data));
 
     ttiPolyfill.getFirstConsistentlyInteractive().then((value) => {
       this.put({

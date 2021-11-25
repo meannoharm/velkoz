@@ -7,6 +7,8 @@ const chalk = require("chalk");
 const zlib = require("zlib");
 const rimraf = require("rimraf");
 const typescript = require("rollup-plugin-typescript2");
+const nodeResolve = require("@rollup/plugin-node-resolve").nodeResolve;
+const commonjs = require("@rollup/plugin-commonjs");
 const uglify = require("rollup-plugin-uglify").uglify;
 const execa = require("execa");
 const ora = require("ora");
@@ -61,10 +63,10 @@ function PascalCase(str) {
 const generateBanner = (packageName) => {
   let ret =
     "/*!\n" +
-    " * better-scroll / " +
+    " * Velkoz / " +
     packageName +
     "\n" +
-    " * (c) 2016-" +
+    " * (c) " +
     new Date().getFullYear() +
     " gao\n" +
     " * Released under the MIT License.\n" +
@@ -133,6 +135,8 @@ function generateBuildPluginsConfigs(isMin) {
   if (isMin) {
     plugins.push(uglify());
   }
+  plugins.push(nodeResolve());
+  plugins.push(commonjs());
   plugins.push(typescript(tsConfig));
   return plugins;
 }
