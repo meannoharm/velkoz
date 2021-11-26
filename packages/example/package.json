@@ -7,16 +7,12 @@
     "normalize.css": "^8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.1",
+    "react-scripts": "^4.0.3",
     "velkoz": "^0.0.1"
   },
-  "devDependencies": {
-    "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.1.8"
-  },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "browserslist": {
     "production": [
@@ -28,6 +24,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
     ]
   }
 }

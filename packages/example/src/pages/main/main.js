@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import Velkoz from "@velkoz/core";
+import Velkoz from "velkoz";
 import "./main.css";
 
 export default function Main() {
