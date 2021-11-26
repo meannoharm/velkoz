@@ -1,4 +1,4 @@
-import { Action, LevelType } from "@velkoz/shared-utils";
+import { InfoAction } from "@velkoz/shared-utils";
 import type Velkoz from "@velkoz/core";
 import { getLCP, getFID, getCLS } from "web-vitals";
 import ttiPolyfill from "tti-polyfill";
@@ -55,6 +55,6 @@ export default class RealUserMonitoring {
 
   private put(data: Metric | TTIMetric) {
     console.log(data);
-    this.velkoz.pushException(new Action(LevelType.INFO, data));
+    this.velkoz.pushException(new InfoAction("RealUserMonitoring", data));
   }
 }

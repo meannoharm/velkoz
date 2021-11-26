@@ -75,7 +75,7 @@ export default class VelkozConstructor<O = Record<string, unknown>> extends Even
   public pushException(action: Action) {
     if (this.isDomainFilter()) return;
     if (this.isLevelFilter(action.level)) return;
-    this.trigger("captureBefore", action);
+    this.trigger("beforeCapture", action);
     // 存入前端缓存，等待推送
     store.update(action);
   }

@@ -1,0 +1,16 @@
+{
+  "name": "@velkoz/http",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/http.js",
+  "module": "dist/http.esm.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {},
+  "dependencies": {
+    "@velkoz/core": "^0.0.1",
+    "@velkoz/shared-utils": "^0.0.1"
+  },
+  "license": "MIT"
+}

@@ -5,6 +5,7 @@ export enum LevelType {
 
 export class Action<T = unknown> {
   level: LevelType;
+  type: string;
   payload: T;
   time: number;
   host: string;
@@ -12,8 +13,9 @@ export class Action<T = unknown> {
   search: string;
   userAgent: string;
 
-  constructor(level: LevelType, payload: T) {
+  constructor(level: LevelType, type: string, payload: T) {
     this.level = level;
+    this.type = type;
     this.payload = payload;
     this.time = new Date().valueOf();
     this.host = location.host;
@@ -24,13 +26,13 @@ export class Action<T = unknown> {
 }
 
 export class ErrorAction<T> extends Action<T> {
-  constructor(data: T) {
-    super(LevelType.ERROR, data);
+  constructor(type: string, data: T) {
+    super(LevelType.ERROR, type, data);
   }
 }
 
 export class InfoAction<T> extends Action<T> {
-  constructor(data: T) {
-    super(LevelType.INFO, data);
+  constructor(type: string, data: T) {
+    super(LevelType.INFO, type, data);
   }
 }

@@ -1,4 +1,4 @@
-import { Action, LevelType } from "@velkoz/shared-utils";
+import { InfoAction } from "@velkoz/shared-utils";
 import type Velkoz from "@velkoz/core";
 
 export interface NavigationTimingDetail {
@@ -25,7 +25,7 @@ export default class NavigationTiming {
           onloadTime: timing.loadEventEnd - timing.fetchStart,
         };
         console.log(infoObj);
-        velkoz.pushException(new Action(LevelType.INFO, infoObj));
+        velkoz.pushException(new InfoAction("NavigationTiming", infoObj));
       }, 0);
     });
   }
