@@ -8,8 +8,9 @@
   "author": "gao",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "packages:build": "node scripts/build.js",
     "preinstall": "node ./scripts/checkYarn.js",
+    "postinstall": "yarn bootstrap",
+    "packages:build": "node scripts/build.js",
     "example:dev": "lerna run --stream --scope example start",
     "example:build": "lerna run --stream --scope example build"
   },
@@ -18,7 +19,7 @@
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "eslint": "^7.11.0",
+    "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "execa": "^4.0.3",

@@ -10,7 +10,9 @@
   "scripts": {},
   "dependencies": {
     "@velkoz/core": "^0.0.1",
-    "@velkoz/shared-utils": "^0.0.1"
+    "@velkoz/shared-utils": "^0.0.1",
+    "@velkoz/real-user-monitoring": "^0.0.1",
+    "@velkoz/navigation-timing": "^0.0.1"
   },
   "license": "MIT"
 }

@@ -21,7 +21,7 @@ export class OptionsConstructor implements DefOptions {
     this.url = "";
     this.token = "";
     this.match = [];
-    this.level = [LevelType.ERROR];
+    this.level = [];
     this.autoPush = true;
   }
 

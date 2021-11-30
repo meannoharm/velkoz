@@ -84,7 +84,7 @@ const buildType = [
     ext: ".min.js",
   },
   {
-    format: "es",
+    format: "esm",
     ext: ".esm.js",
   },
 ];
