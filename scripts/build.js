@@ -62,15 +62,15 @@ function PascalCase(str) {
 
 const generateBanner = (packageName) => {
   let ret =
-    "/*!\n" +
-    " * Velkoz / " +
+    "/*! *****************************************************************************\n" +
+    "Velkoz / " +
     packageName +
-    "\n" +
-    " * (c) " +
+    "\n\n" +
+    "Copyright (c) " +
     new Date().getFullYear() +
-    " gao\n" +
-    " * Released under the MIT License.\n" +
-    " */";
+    " Gao\n\n" +
+    "Released under the MIT License.\n" +
+    "***************************************************************************** */";
   return ret;
 };
 
