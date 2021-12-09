@@ -19,8 +19,10 @@ interface PluginsMap {
 export default class VelkozConstructor extends EventEmitter {
   static plugins: PluginItem[] = [];
   static pluginsMap: PluginsMap = {};
+
   private options: OptionsConstructor;
   private plugins: { [name: string]: any };
+  private actionList: Action[] = [];
 
   static use(ctor: PluginCtor) {
     const name = ctor.pluginName;
@@ -38,6 +40,14 @@ export default class VelkozConstructor extends EventEmitter {
     return VelkozConstructor;
   }
 
+  /**
+   * @param options
+   * @param {string} token ;
+   * @param {string[]} url 推送后台地址;
+   * @param {string[]} match 需要采集的url;
+   * @param {LevelType[]} level 需要采集等级;
+   * @param {boolean} autoPush 自动推送;
+   */
   constructor(options?: Options) {
     super(["pluginInstall", "beforeCapture", "afterCapture"]);
 
@@ -66,18 +76,19 @@ export default class VelkozConstructor extends EventEmitter {
 
   private isLevelFilter = (type: LevelType) => {
     return this.options.level.filter((ex) => {
-      return type.indexOf(ex) !== -1;
+      return type.includes(ex);
     }).length > 0
-      ? true
-      : false;
+      ? false
+      : true;
   };
 
   public pushException(action: Action) {
-    if (this.isDomainFilter()) return;
-    if (this.isLevelFilter(action.level)) return;
+    if (this.options.match && this.options.match.length > 0 && this.isDomainFilter()) return;
+    if (this.options.level && this.options.level.length > 0 && this.isLevelFilter(action.level)) return;
     this.trigger("beforeCapture", action);
     // 存入前端缓存，等待推送
-    store.update(action);
+    this.actionList.push(action);
+    this.trigger("afterCapture", action);
   }
 
   // 页面会在卸载时提交本次log
@@ -90,5 +101,9 @@ export default class VelkozConstructor extends EventEmitter {
     if (autoPush && url) {
       window.addEventListener("unload", logData, false);
     }
+  }
+
+  public getActionList(): Action[] {
+    return JSON.parse(JSON.stringify(this.actionList));
   }
 }

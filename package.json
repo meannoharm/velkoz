@@ -12,13 +12,15 @@
     "postinstall": "yarn bootstrap",
     "packages:build": "node scripts/build.js",
     "example:dev": "lerna run --stream --scope example start",
-    "example:build": "lerna run --stream --scope example build"
+    "example:build": "lerna run --stream --scope example build",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "conventional-changelog-cli": "^2.1.1",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",

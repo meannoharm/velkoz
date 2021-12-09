@@ -84,10 +84,6 @@ export default class NetworkError {
             time: sTime,
             response: {},
           };
-          const headers = new Headers(config.headers || {});
-          Object.assign(headers, {
-            setRequestHeader: headers.set,
-          });
           return originalFetch.apply(window, [url, config]).then(
             (res: Response) => {
               const resClone = res.clone();
