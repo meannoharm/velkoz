@@ -1,3 +1,8 @@
-const { override, removeModuleScopePlugin } = require("customize-cra");
+const { override, removeModuleScopePlugin,disableEsLint } = require("customize-cra");
 
-module.exports = override(removeModuleScopePlugin());
+module.exports = override(
+  removeModuleScopePlugin(),
+
+  // disable eslint in webpack
+  disableEsLint()
+);

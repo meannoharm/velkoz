@@ -18,7 +18,7 @@
     "paths": {
       "@velkoz/*": ["packages/*/src"]
     },
-    "typeRoots": ["node_modules/@types"]
+    "preserveConstEnums": true,
   },
   "include": ["packages/*/src", "packages/example/velkoz.js", "packages/example/velkoz.js"],
   "exclude": ["node_modules"]

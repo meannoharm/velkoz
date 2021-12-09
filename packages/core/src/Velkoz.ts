@@ -16,7 +16,7 @@ interface PluginsMap {
   [key: string]: boolean;
 }
 
-export default class VelkozConstructor<O = Record<string, unknown>> extends EventEmitter {
+export default class VelkozConstructor extends EventEmitter {
   static plugins: PluginItem[] = [];
   static pluginsMap: PluginsMap = {};
   private options: OptionsConstructor;
@@ -38,7 +38,7 @@ export default class VelkozConstructor<O = Record<string, unknown>> extends Even
     return VelkozConstructor;
   }
 
-  constructor(options?: Options & O) {
+  constructor(options?: Options) {
     super(["pluginInstall", "beforeCapture", "afterCapture"]);
 
     this.plugins = {};

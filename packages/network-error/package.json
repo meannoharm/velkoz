@@ -1,11 +1,11 @@
 {
-  "name": "@velkoz/http",
+  "name": "@velkoz/network-error",
   "version": "0.0.1",
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/http.js",
-  "module": "dist/http.esm.js",
+  "main": "dist/network-error.js",
+  "module": "dist/network-error.esm.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {},
   "dependencies": {

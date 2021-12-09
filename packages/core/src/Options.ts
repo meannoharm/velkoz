@@ -8,7 +8,7 @@ export interface DefOptions {
   autoPush: boolean;
 }
 
-export type Options = DefOptions;
+export type Options = Partial<DefOptions>;
 
 export class OptionsConstructor implements DefOptions {
   token: string;
