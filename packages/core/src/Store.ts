@@ -48,4 +48,10 @@ export default class Store {
   public getStore() {
     return this.stack;
   }
+
+  private sendByImage() {}
+
+  private sendByBeacon() {}
+
+  private storeToLocalStorage() {}
 }
