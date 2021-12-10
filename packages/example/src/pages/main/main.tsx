@@ -6,7 +6,7 @@ import ReactJson from "react-json-view";
 import dayjs from "dayjs";
 import "./main.css";
 import type { ColumnsType } from "antd/lib/table";
-import type { Action } from "@velkoz/shared-utils";
+import type { WholeAction } from "@velkoz/core";
 
 const MOCK_NORMAL_URL = "https://run.mocky.io/v3/2eec3b9c-d393-4902-9e0d-72b48b4748c9";
 const MOCK_EXCEPTION_URL = "https://run.mocky.io/v3/c58b5ab6-ff55-4a45-96bc-ede851ce2de3";
@@ -17,16 +17,16 @@ const TagMap = {
 };
 
 export default function Main() {
-  const [actionList, setActionList] = useState<Action[]>([]);
+  const [actionList, setActionList] = useState<WholeAction[]>([]);
 
   useEffect(() => {
     const velkoz = new Velkoz({
       url: "",
-      level: [],
+      type: [],
     });
     velkoz.on("afterCapture", (action) => {
       console.log(action);
-      setActionList(velkoz.getActionList());
+      setActionList(velkoz.getStore());
     });
     return () => {
       velkoz.off("afterCapture")
@@ -95,7 +95,7 @@ export default function Main() {
     );
   };
 
-  const columns: ColumnsType<Action> = [
+  const columns: ColumnsType<WholeAction> = [
     {
       title: "level",
       key: "level",

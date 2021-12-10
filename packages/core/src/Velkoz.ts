@@ -1,6 +1,7 @@
-import { warn, isUndef, EventEmitter, store } from "@velkoz/shared-utils";
+import { warn, isUndef, EventEmitter } from "@velkoz/shared-utils";
+import Store from "./Store";
 import { Options, OptionsConstructor } from "./Options";
-import type { Action, LevelType } from "@velkoz/shared-utils";
+import type { WholeAction, ActionType } from "./Store";
 
 interface PluginCtor {
   pluginName: string;
@@ -20,12 +21,6 @@ export default class VelkozConstructor extends EventEmitter {
   static plugins: PluginItem[] = [];
   static pluginsMap: PluginsMap = {};
 
-  private options: OptionsConstructor;
-  private plugins: { [name: string]: any };
-  // 隔离插件报错
-  private pluginState: { [name: string]: boolean };
-  private actionList: Action[] = [];
-
   static use(ctor: PluginCtor) {
     const name = ctor.pluginName;
     const installed = VelkozConstructor.plugins.some((plugin) => ctor === plugin.ctor);
@@ -42,6 +37,12 @@ export default class VelkozConstructor extends EventEmitter {
     return VelkozConstructor;
   }
 
+  private options: OptionsConstructor;
+  private plugins: { [name: string]: any };
+  // 隔离插件报错
+  private pluginState: { [name: string]: boolean };
+  private store: Store;
+
   /**
    * @param options
    * @param {string} token ;
@@ -56,10 +57,7 @@ export default class VelkozConstructor extends EventEmitter {
     this.plugins = {};
     this.options = new OptionsConstructor().merge(options);
     this.applyPlugins();
-    // 注册上报事件
-    if (this.options.autoPush) {
-      this.registerReport();
-    }
+    this.store = new Store(this);
   }
 
   private applyPlugins() {
@@ -83,37 +81,30 @@ export default class VelkozConstructor extends EventEmitter {
     return this.options.match.filter((item) => item.includes(href)).length > 0 ? true : false;
   };
 
-  private isLevelFilter = (type: LevelType) => {
-    return this.options.level.filter((ex) => {
+  private isTypeFilter = (type: ActionType) => {
+    return this.options.type.filter((ex) => {
       return type.includes(ex);
     }).length > 0
       ? false
       : true;
   };
 
-  public pushException(action: Action) {
+  public pushException<T>(type: ActionType, kind: string, payload: T) {
     if (this.options.match && this.options.match.length > 0 && this.isDomainFilter()) return;
-    if (this.options.level && this.options.level.length > 0 && this.isLevelFilter(action.level)) return;
+    if (this.options.type && this.options.type.length > 0 && this.isTypeFilter(type)) return;
+    const action = {
+      type,
+      kind,
+      payload,
+    };
     this.trigger("beforeCapture", action);
     // 存入前端缓存，等待推送
-    this.actionList.push(action);
+    this.store.dispatch<T>(action);
     this.trigger("afterCapture", action);
   }
 
-  // 页面会在卸载时提交本次log
-  private registerReport() {
-    const { url, autoPush } = this.options;
-    function logData() {
-      const log = store.get();
-      navigator.sendBeacon(url, JSON.stringify(log));
-    }
-    if (autoPush && url) {
-      window.addEventListener("unload", logData, false);
-    }
-  }
-
-  public getActionList(): Action[] {
-    return JSON.parse(JSON.stringify(this.actionList));
+  public getStore(): WholeAction[] {
+    return this.store.getStore();
   }
 
   public getPluginStats(): { [name: string]: boolean } {

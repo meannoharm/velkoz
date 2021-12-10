@@ -1,4 +1,4 @@
-import { replaceOld, ErrorAction, variableTypeDetection } from "@velkoz/shared-utils";
+import { replaceOld, variableTypeDetection } from "@velkoz/shared-utils";
 import type Velkoz from "@velkoz/core";
 
 export const enum HttpTypes {
@@ -62,7 +62,7 @@ export default class NetworkError {
           }
           this.payload.response.status = status;
           this.payload.elapsedTime = eTime - this.payload.time;
-          velkoz.pushException(new ErrorAction("NetworkError", this.payload));
+          velkoz.pushException("ERROR", "NetworkError", this.payload);
         });
         original.apply(this, args);
       };
@@ -92,7 +92,7 @@ export default class NetworkError {
               payload.response.status = resClone.status;
               resClone.text().then((data) => {
                 payload.response.data = data;
-                velkoz.pushException(new ErrorAction("NetworkError", payload));
+                velkoz.pushException("ERROR", "NetworkError", payload);
               });
               return res;
             },
@@ -100,7 +100,7 @@ export default class NetworkError {
               const eTime = Date.now();
               payload.elapsedTime = eTime - sTime;
               payload.response.status = 0;
-              velkoz.pushException(new ErrorAction("NetworkError", payload));
+              velkoz.pushException("ERROR", "NetworkError", payload);
               throw err;
             }
           );

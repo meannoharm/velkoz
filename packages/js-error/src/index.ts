@@ -1,4 +1,3 @@
-import { ErrorAction } from "@velkoz/shared-utils";
 import type Velkoz from "@velkoz/core";
 
 export default class JsError {
@@ -6,15 +5,13 @@ export default class JsError {
   constructor(public velkoz: Velkoz) {
     window.onerror = (errorMsg, url, lineNumber, columnNumber, errorObj) => {
       const errorStack = errorObj ? errorObj.stack : null;
-      velkoz.pushException(
-        new ErrorAction("CodeError", {
-          errorMsg,
-          url,
-          lineNumber,
-          columnNumber,
-          errorStack,
-        })
-      );
+      velkoz.pushException("ERROR", "CodeError", {
+        errorMsg,
+        url,
+        lineNumber,
+        columnNumber,
+        errorStack,
+      });
     };
 
     // 未处理的 Promise rejection
@@ -27,12 +24,10 @@ export default class JsError {
       } else {
         errorMsg = e.reason;
       }
-      velkoz.pushException(
-        new ErrorAction("Unhandledrejection", {
-          errorMsg,
-          errorStack,
-        })
-      );
+      velkoz.pushException("ERROR", "Unhandledrejection", {
+        errorMsg,
+        errorStack,
+      });
     };
   }
 }

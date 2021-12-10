@@ -1,10 +1,10 @@
-import { LevelType } from "@velkoz/shared-utils";
+import { ActionType } from "./Store";
 
 export interface DefOptions {
   token: string;
   url: string;
   match: string[];
-  level: LevelType[];
+  type: ActionType[];
   autoPush: boolean;
 }
 
@@ -14,14 +14,14 @@ export class OptionsConstructor implements DefOptions {
   token: string;
   url: string;
   match: string[];
-  level: LevelType[];
+  type: ActionType[];
   autoPush: boolean;
 
   constructor() {
     this.url = "";
     this.token = "";
     this.match = [];
-    this.level = [];
+    this.type = [];
     this.autoPush = true;
   }
 
