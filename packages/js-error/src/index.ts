@@ -19,8 +19,8 @@ export default class JsError {
 
     // 未处理的 Promise rejection
     window.onunhandledrejection = (e) => {
-      let errorMsg = "",
-        errorStack = "";
+      let errorMsg = "";
+      let errorStack = "";
       if (typeof e.reason === "object") {
         errorMsg = e.reason.message;
         errorStack = e.reason.stack;

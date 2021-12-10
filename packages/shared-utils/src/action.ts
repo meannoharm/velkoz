@@ -1,6 +1,9 @@
+import { v4 as uuidV4 } from "uuid";
+
 export type LevelType = "INFO" | "ERROR";
 
 export class Action<T = any> {
+  id: string;
   level: LevelType;
   type: string;
   payload: T;
@@ -11,6 +14,7 @@ export class Action<T = any> {
   userAgent: string;
 
   constructor(level: LevelType, type: string, payload: T) {
+    this.id = uuidV4();
     this.level = level;
     this.type = type.toUpperCase();
     this.payload = payload;

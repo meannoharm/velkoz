@@ -22,6 +22,8 @@ export default class VelkozConstructor extends EventEmitter {
 
   private options: OptionsConstructor;
   private plugins: { [name: string]: any };
+  // 隔离插件报错
+  private pluginState: { [name: string]: boolean };
   private actionList: Action[] = [];
 
   static use(ctor: PluginCtor) {
@@ -64,7 +66,14 @@ export default class VelkozConstructor extends EventEmitter {
     VelkozConstructor.plugins.forEach((item: PluginItem) => {
       const ctor = item.ctor;
       if (typeof ctor === "function") {
-        this.plugins[item.name] = new ctor(this);
+        try {
+          this.plugins[item.name] = new ctor(this);
+          this.pluginState[item.name] = true;
+        } catch (e) {
+          this.pluginState[item.name] = false;
+        } finally {
+          this.trigger("pluginInstall", this.plugins[item.name]);
+        }
       }
     });
   }
@@ -105,5 +114,9 @@ export default class VelkozConstructor extends EventEmitter {
 
   public getActionList(): Action[] {
     return JSON.parse(JSON.stringify(this.actionList));
+  }
+
+  public getPluginStats(): { [name: string]: boolean } {
+    return JSON.parse(JSON.stringify(this.pluginState));
   }
 }

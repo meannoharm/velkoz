@@ -8,6 +8,9 @@
   "module": "dist/shared-utils.esm.js",
   "typings": "dist/types/index.d.ts",
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "@types/uuid": "^8.3.3",
+    "uuid": "^8.3.2"
+  },
   "license": "MIT"
 }

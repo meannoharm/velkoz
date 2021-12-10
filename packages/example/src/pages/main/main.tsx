@@ -28,6 +28,9 @@ export default function Main() {
       console.log(action);
       setActionList(velkoz.getActionList());
     });
+    return () => {
+      velkoz.off("afterCapture")
+    }
   }, []);
 
   const triggerJsError = () => {
@@ -106,7 +109,7 @@ export default function Main() {
       dataIndex: "payload",
       width: 560,
       render: (text) => (
-        <ReactJson src={text} name={false} collapsed={1} enableClipboard={false} displayDataTypes={false} displayObjectSize={false} />
+        <ReactJson src={text} name={false} collapsed enableClipboard={false} displayDataTypes={false} displayObjectSize={false} />
       ),
     },
     {
@@ -142,7 +145,7 @@ export default function Main() {
         <Button onClick={onClickNativeErrorFetch}>Fetch异常请求</Button>
       </div>
       <div className="list-container">
-        <Table size="small" dataSource={actionList} columns={columns} pagination={false} scroll={{y: '700px'}} />
+        <Table rowKey={item => item.id} size="small" dataSource={actionList} columns={columns} pagination={false} scroll={{y: '700px'}} />
       </div>
     </div>
   );
