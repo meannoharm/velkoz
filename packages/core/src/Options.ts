@@ -8,6 +8,13 @@ export interface DefOptions {
   autoPush: boolean;
 }
 
+/**
+ * @param {string} token ;
+ * @param {string[]} url 推送后台地址;
+ * @param {string[]} match 需要采集的url;
+ * @param {LevelType[]} level 需要采集等级;
+ * @param {boolean} autoPush 自动推送;
+ */
 export type Options = Partial<DefOptions>;
 
 export class OptionsConstructor implements DefOptions {

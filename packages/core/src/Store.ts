@@ -49,9 +49,30 @@ export default class Store {
     return this.stack;
   }
 
-  private sendByImage() {}
+  private sendByImage(url: string, data) {
+    let img = document.createElement("img");
+    const params = [];
+    Object.keys(data).forEach((key) => {
+      params.push(`${key}=${encodeURIComponent(data[key])}`);
+    });
+    img.onload = () => (img = null);
+    img.src = `${url}?${params.join("&")}`;
+  }
 
-  private sendByBeacon() {}
+  private sendByBeacon(url: string, data) {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      let value = data[key];
+      if (typeof value !== "string") {
+        // formData只能append string 或 Blob
+        value = JSON.stringify(value);
+      }
+      formData.append(key, value);
+    });
+    navigator.sendBeacon(url, formData);
+  }
 
   private storeToLocalStorage() {}
+
+  public reportData() {}
 }

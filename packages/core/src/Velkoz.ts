@@ -44,12 +44,7 @@ export default class VelkozConstructor extends EventEmitter {
   private store: Store;
 
   /**
-   * @param options
-   * @param {string} token ;
-   * @param {string[]} url 推送后台地址;
-   * @param {string[]} match 需要采集的url;
-   * @param {LevelType[]} level 需要采集等级;
-   * @param {boolean} autoPush 自动推送;
+   * @param Options
    */
   constructor(options?: Options) {
     super(["pluginInstall", "beforeCapture", "afterCapture"]);

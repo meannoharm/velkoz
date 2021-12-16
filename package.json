@@ -13,6 +13,8 @@
     "packages:build": "node scripts/build.js",
     "example:dev": "lerna run --stream --scope example start",
     "example:build": "lerna run --stream --scope example build",
+    "doc:dev": "lerna run --stream --scope documents docs:dev",
+    "doc:build": "lerna run --stream --scope documents docs:dev",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1"
   },
   "dependencies": {

@@ -9,7 +9,7 @@
   "typings": "dist/types/index.d.ts",
   "scripts": {},
   "dependencies": {
-    "@velkoz/core": "^0.0.1",
+    "@velkoz/core": "^0.0.1"
   },
   "license": "MIT"
 }

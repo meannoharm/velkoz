@@ -1,0 +1,12 @@
+{
+  "name": "documents",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "vuepress": "^1.8.2"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  }
+}
